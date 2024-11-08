@@ -41,11 +41,11 @@ public static class NodeExtensions
     {
         return FindChildOfType<T>(node.GetTree().Root);
     }
-    public static SignalAwaiter AwaiterTimer(this Node node, double seconds)
+    public static SignalAwaiter TimerAwaiter(this Node node, double seconds)
     {
         return node.ToSignal(node.GetTree().CreateTimer(seconds), Timer.SignalName.Timeout);
     }
-    public static SignalAwaiter AwaiterNextFrame(this Node node)
+    public static SignalAwaiter NextFrameAwaiter(this Node node)
     {
         return node.ToSignal(node.GetTree(), SceneTree.SignalName.ProcessFrame);
     }
