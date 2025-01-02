@@ -5,6 +5,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Assets\Scripts\Generators\GenerateNumerics.py" />
+    <None Include="Resources\Source\PythonGenerators\GenerateNumerics.py" />
   </ItemGroup>
 </Project>
