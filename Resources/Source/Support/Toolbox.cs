@@ -230,5 +230,9 @@ namespace Support
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string ConvertInvariant<T>(params T[] numbers) => string.Join(", ", from n in numbers select Convert.ToString(n, CultureInfo.InvariantCulture.NumberFormat));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GridToIndex(in Vec2<int> g, int width) => g.y * width + g.x;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vec2<int> IndexToGrid(int index, int width) => new(index % width, index / width);
     }
 }
