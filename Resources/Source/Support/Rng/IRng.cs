@@ -8,6 +8,9 @@ namespace Support.Rng;
 /// </summary>
 public interface IRng
 {
+    /// <summary>
+    /// Time based seed, counted since OS startup.
+    /// </summary>
     static int TimeSeed => Environment.TickCount;
     int Seed { get; }
     T GetNumber<T>(T min, T max) where T : INumber<T>;
