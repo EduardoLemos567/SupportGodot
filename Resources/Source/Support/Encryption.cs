@@ -4,7 +4,9 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace Support;
+//TODO: [ENCRYPTION MAY BE INSECURE] review and implement this code, currently not needed.
 
+#if false
 class AesExample
 {
     public static void Main()
@@ -170,6 +172,7 @@ public class AesGcmEncryption
        //derivedKey.CopyTo(key);
     }
 }
+#endif
 public static class Encryption
 {
     private const int BLOCK_SIZE = 256;
@@ -233,7 +236,9 @@ public static class Encryption
     }
     private static byte[] DeriveKey(string key, byte[] salt)
     {
+#pragma warning disable SYSLIB0041 // Type or member is obsolete
         using var derivated = new Rfc2898DeriveBytes(key, salt, DERIVATION_ITERATIONS);
+#pragma warning restore SYSLIB0041 // Type or member is obsolete
         return derivated.GetBytes(KEY_SIZE);
     }
     private static SymmetricAlgorithm CreateSymmetricAlgorithm()
