@@ -1,9 +1,8 @@
 using System;
 
-namespace Support
+namespace Support;
+
+public interface IReordeable<E> where E : Enum
 {
-    public interface IReordeable<E> where E : Enum
-    {
-        public E Order { get; }
-    }
+    public E Order { get; }
 }
