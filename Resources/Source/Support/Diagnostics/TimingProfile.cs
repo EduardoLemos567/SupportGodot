@@ -1,19 +1,24 @@
-﻿namespace Support.Diagnostics;
+using System.Diagnostics;
 
-#if DEBUG
+namespace Support.Diagnostics;
+
 public readonly struct TimingProfile
 {
-    private readonly System.Diagnostics.Stopwatch timing;
-    public TimingProfile() => timing = System.Diagnostics.Stopwatch.StartNew();
+    private readonly Stopwatch timing;
+    private readonly ILogger logger;
+    public TimingProfile(ILogger logger)
+    {
+        timing = Stopwatch.StartNew();
+        this.logger = logger;
+    }
     public void RestartSector(string sector)
     {
-        Debug.Lap(timing, sector);
+        logger.Lap(timing, sector);
         timing.Restart();
     }
     public void EndSector(string sector)
     {
-        Debug.Lap(timing, sector);
+        logger.Lap(timing, sector);
         timing.Stop();
     }
 }
-#endif

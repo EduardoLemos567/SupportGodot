@@ -19,7 +19,6 @@ public partial class LanguagePack : Resource
     {
         Debug.Assert(entriesDictionary != null, $"'dictEntries' was not initialized for this language pack ({ResourceName}), consider calling Setup.");
         Debug.Assert(entriesDictionary!.ContainsKey(key), $"Key '{key}' was not present in this language pack ({ResourceName}).");
-        LogManager.Instance!.Log("Translation", $"Received translation request with the key '{key}' not present in language pack ({ResourceName}).");
         return entriesDictionary.ContainsKey(key);
     }
     public void ApplyLanguagePackOnNode(in Node node)

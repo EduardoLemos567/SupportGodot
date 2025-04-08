@@ -1,30 +1,45 @@
+using System.Collections.Generic;
 using Godot;
-using Godot.Collections;
+using Support;
 
 namespace Support.Diagnostics;
 
 public partial class LogManager : GodotSingleton<LogManager>
 {
-    [Export] private Dictionary<string, bool>? relevance;
-    public bool IsRelevant(string name)
+    private static DummyLogger? dummyLogger;
+    private static FileLogWriter? fileWriter;
+    [Export] private LoggerSettings? defaultSettings;
+    [Export] private Godot.Collections.Dictionary<string, LoggerSettings?>? settings;
+    public override void _Ready()
     {
-        return relevance is not null &&
-               relevance.ContainsKey(name) &&
-               relevance[name];
+        dummyLogger = new DummyLogger();
+        fileWriter = new FileLogWriter();
     }
-    public void Log(string name, object msg)
+    public ILogger CreateLogger(object obj) => CreateLogger(obj.GetType().Name);
+    public ILogger CreateLogger(string name, LoggerSettings? loggerSettings = null)
     {
-        if (IsRelevant(name))
-        { Debug.Print($"[{name}] {msg}"); }
+        if (loggerSettings is null && IsDummy(name, out loggerSettings))
+        {
+            return dummyLogger!;
+        }
+        else
+        {
+            return new Logger(name, loggerSettings!, fileWriter);
+        }
     }
-    public void Log(string name, string place, object msg)
+    /// <summary>
+    /// Check if settings exists for given log name and if it would print anything.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="loggerSettings"></param>
+    /// <returns>true if it should use the empty logger, dummy logger.</returns>
+    private bool IsDummy(string name, out LoggerSettings? loggerSettings)
     {
-        if (IsRelevant(name))
-        { Debug.Print($"[{name}:{place}] {msg}"); }
-    }
-    public void Log(string name, object obj, object msg)
-    {
-        if (IsRelevant(name))
-        { Debug.Print($"[{name}:{obj.GetType().Name}({obj.GetHashCode()})] {msg}"); }
+        loggerSettings = settings?.GetValueOrDefault(name, null) ?? defaultSettings;
+        if (loggerSettings is not null)
+        {
+            return loggerSettings!.Level == E_LOG_LEVEL.NONE || loggerSettings.Type == E_LOG_TYPE.NONE;
+        }
+        return true;
     }
 }

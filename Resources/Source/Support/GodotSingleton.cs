@@ -9,7 +9,6 @@ namespace Support;
 public partial class GodotSingleton<TSelf> : Node where TSelf : class
 {
     public static TSelf? Instance { get; private set; }
-    public static bool IsInstanced => Instance != null;
     public override void _EnterTree() => Instance = this as TSelf;
     public override void _ExitTree() => Instance = null;
 }
