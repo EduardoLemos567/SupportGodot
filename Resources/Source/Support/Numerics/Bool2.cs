@@ -8,7 +8,7 @@ public struct Bool2 : IVectorBool
 {
     public bool x;
     public bool y;
-    public readonly int Length => 2;
+    public readonly int DIMENSIONS => 2;
     #region SWIZZLE
     public readonly bool this[int x] => x switch
     {

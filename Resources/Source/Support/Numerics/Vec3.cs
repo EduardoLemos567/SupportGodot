@@ -19,7 +19,7 @@ public struct Vec3<N> : IVectorNumber<N> where N : INumber<N>
     public N x;
     public N y;
     public N z;
-    public readonly int Length => 3;
+    public readonly int DIMENSIONS => 3;
     #region SWIZZLE
     public N this[int x]
     {

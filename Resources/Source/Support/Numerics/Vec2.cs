@@ -16,7 +16,7 @@ public struct Vec2<N> : IVectorNumber<N> where N : INumber<N>
     public static readonly Vec2<N> Right = CreateFrom(-1, 0);
     public N x;
     public N y;
-    public readonly int Length => 2;
+    public readonly int DIMENSIONS => 2;
     #region SWIZZLE
     public N this[int x]
     {

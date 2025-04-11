@@ -14,7 +14,7 @@ public struct Vec4<N> : IVectorNumber<N> where N : INumber<N>
     public N y;
     public N z;
     public N w;
-    public readonly int Length => 4;
+    public readonly int DIMENSIONS => 4;
     #region SWIZZLE
     public N this[int x]
     {

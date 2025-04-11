@@ -2,5 +2,5 @@
 
 public interface IVector
 {
-    int Length { get; }
+    int DIMENSIONS { get; }
 }

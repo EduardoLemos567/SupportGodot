@@ -7,7 +7,7 @@ namespace Support.Geometrics;
 /// This will represent a sphere position and radius in 3d space.
 /// </summary>
 /// <typeparam name="N"></typeparam>
-public struct Sphere<N> where N : INumber<N>
+public struct Sphere<N> : IConstraintable where N : INumber<N>
 {
     private N _radius;
     public N Radius

@@ -10,7 +10,7 @@ public struct Bool4 : IVectorBool
     public bool y;
     public bool z;
     public bool w;
-    public readonly int Length => 4;
+    public readonly int DIMENSIONS => 4;
     #region SWIZZLE
     public readonly bool this[int x] => x switch
     {

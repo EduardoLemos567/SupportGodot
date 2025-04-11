@@ -7,7 +7,7 @@ namespace Support.Geometrics;
 /// This will represent a box position and size in 3D space.
 /// </summary>
 /// <typeparam name="N"></typeparam>
-public struct Box<N> where N : INumber<N>
+public struct Box<N> : IConstraintable where N : INumber<N>
 {
     public Vec3<N> min;
     private Vec3<N> _size;
