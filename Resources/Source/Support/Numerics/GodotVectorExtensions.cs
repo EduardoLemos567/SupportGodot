@@ -10,7 +10,7 @@ using GodotVector4I = Godot.Vector4I;
 
 namespace Support.Numerics;
 
-public static class GodotExtensions
+public static class GodotVectorExtensions
 {
     // GodotVector2
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

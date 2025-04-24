@@ -3,7 +3,7 @@ using Godot;
 
 namespace Support.Diagnostics;
 
-public partial class LogManager : GodotSingleton<LogManager>
+public partial class LogManager : GodotSingletonNode<LogManager>
 {
     private static DummyLogger? dummyLogger;
     private static FileLogWriter? fileWriter;
@@ -23,7 +23,7 @@ public partial class LogManager : GodotSingleton<LogManager>
         }
         else
         {
-            return new Logger(name, loggerSettings!, fileWriter);
+            return new Logger(name, loggerSettings!.Level, loggerSettings.Type, fileWriter);
         }
     }
     /// <summary>

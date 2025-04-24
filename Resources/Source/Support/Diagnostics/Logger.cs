@@ -6,12 +6,14 @@ public class Logger : ILogger
 {
     private static readonly Stopwatch beginClock = Stopwatch.StartNew();
     private readonly string name;
-    private readonly LoggerSettings settings;
+    private readonly E_LOG_LEVEL level;
+    private readonly E_LOG_TYPE type;
     private readonly FileLogWriter? fileLogger;
-    public Logger(string name, LoggerSettings settings, FileLogWriter? fileLogger)
+    public Logger(string name, E_LOG_LEVEL level, E_LOG_TYPE type, FileLogWriter? fileLogger)
     {
         this.name = name;
-        this.settings = settings;
+        this.level = level;
+        this.type = type;
         this.fileLogger = fileLogger;
     }
     public void Error(params object[] objs) => Print(E_LOG_LEVEL.ERROR, objs);
@@ -25,10 +27,10 @@ public class Logger : ILogger
     /// <param name="sector"></param>
     public void Lap(Stopwatch stopwatch, string sector)
     {
-        if (!settings.Level.HasFlag(E_LOG_LEVEL.LAP)) { return; }
+        if (!level.HasFlag(E_LOG_LEVEL.LAP)) { return; }
         var msg = FormatMessage($"@ {sector} took: {stopwatch.Elapsed}");
         var color = stopwatch.Elapsed.Seconds < 1 ? ConsoleLogWriter.PRINT_COLOR.GREEN : ConsoleLogWriter.PRINT_COLOR.YELLOW;
-        if (settings.Type.HasFlag(E_LOG_TYPE.CONSOLE))
+        if (type.HasFlag(E_LOG_TYPE.CONSOLE))
         {
             ConsoleLogWriter.Print(msg, color);
         }
@@ -37,7 +39,7 @@ public class Logger : ILogger
     public void Dispose() { }
     private void Print(E_LOG_LEVEL level, params object[] objs)
     {
-        if (!settings.Level.HasFlag(level)) { return; }
+        if (!level.HasFlag(level)) { return; }
         var msg = FormatMessage(objs);
         var color = level switch
         {
@@ -47,7 +49,7 @@ public class Logger : ILogger
             E_LOG_LEVEL.DEBUG => ConsoleLogWriter.PRINT_COLOR.GREEN,
             _ => ConsoleLogWriter.PRINT_COLOR.DEFAULT
         };
-        if (settings.Type.HasFlag(E_LOG_TYPE.CONSOLE))
+        if (type.HasFlag(E_LOG_TYPE.CONSOLE))
         {
             ConsoleLogWriter.Print(msg, color);
         }
