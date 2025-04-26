@@ -5,7 +5,7 @@ namespace Support.Extensions;
 
 public static class Rect2IExtensions
 {
-    public static IEnumerable<Vector2I> EnumeratePositions(this Godot.Rect2I rect)
+    public static IEnumerable<Vector2I> EnumeratePositions(this Rect2I rect)
     {
         for (int x = 0; x < rect.Size.X; x++)
         {

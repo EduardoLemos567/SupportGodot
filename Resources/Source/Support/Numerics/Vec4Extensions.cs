@@ -36,7 +36,6 @@ public static class Vec4Extensions
         if (!proximity.HasValue) { proximity = IVectorNumber<F>.PROXIMITY_DISTANCE; }
         return self.Distance(target) < proximity;
     }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec4<F> MoveTowards<F>(in this Vec4<F> self, in Vec4<F> target, F delta) where F : IFloatingPoint<F>
     {
         var diff = target - self;

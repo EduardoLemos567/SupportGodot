@@ -31,7 +31,6 @@ public static class Vec2Extensions
         if (!proximity.HasValue) { proximity = IVectorNumber<F>.PROXIMITY_DISTANCE; }
         return self.Distance(target) < proximity;
     }
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec2<F> MoveTowards<F>(in this Vec2<F> self, in Vec2<F> target, F delta) where F : IFloatingPoint<F>
     {
         var diff = target - self;
@@ -48,6 +47,16 @@ public static class Vec2Extensions
         return (target - self).Normalized();
     }
     #endregion FLOAT_POINT_ONLY
+    public static IEnumerable<Vec2<int>> EnumeratePositions(this Vec2<int> vec)
+    {
+        for (int x = 0; x < vec.x; x++)
+        {
+            for (int y = 0; y < vec.y; y++)
+            {
+                yield return new (x, y);
+            }
+        }
+    }
     // System vector
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec2<N> ToVec2<N>(in this Vector2 self) where N : INumber<N> => Vec2<N>.CreateFrom(self.X, self.Y);

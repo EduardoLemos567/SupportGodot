@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Support;
+namespace Support.Scripts;
 
 /// <summary>
 /// Implement a simple version of singleton pattern.

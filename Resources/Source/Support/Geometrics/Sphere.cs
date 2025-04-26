@@ -23,7 +23,7 @@ public struct Sphere<N> : IConstraintable where N : INumber<N>
     }
     public void EnforceConstraint()
     {
-        var zero = N.CreateChecked(0);
+        var zero = N.CreateTruncating(0);
         if (_radius < zero) { _radius = zero; }
     }
 }

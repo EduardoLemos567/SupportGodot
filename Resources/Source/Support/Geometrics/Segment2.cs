@@ -28,6 +28,6 @@ public struct Segment2<N> where N : INumber<N>
     {
         var d = Direction;
         var p = point - start;
-        return (d.x * p.y - d.y * p.x) >= N.CreateChecked(0);
+        return (d.x * p.y - d.y * p.x) >= N.CreateTruncating(0);
     }
 }

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Godot;
+using Support.Diagnostics;
 
-namespace Support.Diagnostics;
+namespace Support.Scripts.Diagnostics;
 
 public partial class LogManager : GodotSingletonNode<LogManager>
 {
@@ -23,7 +24,7 @@ public partial class LogManager : GodotSingletonNode<LogManager>
         }
         else
         {
-            return new Logger(name, loggerSettings!.Level, loggerSettings.Type, fileWriter);
+            return new Logger(name, loggerSettings!, fileWriter);
         }
     }
     /// <summary>

@@ -18,8 +18,8 @@ public struct Box<N> : IConstraintable where N : INumber<N>
     }
     public Vec3<N> Center
     {
-        readonly get => Size / N.CreateChecked(2) + min;
-        set => min = value - Size / N.CreateChecked(2);
+        readonly get => Size / N.CreateTruncating(2) + min;
+        set => min = value - Size / N.CreateTruncating(2);
     }
     public Vec3<N> Size
     {
@@ -32,10 +32,16 @@ public struct Box<N> : IConstraintable where N : INumber<N>
         _size = size;
         EnforceConstraint();
     }
-    public static Box<N> FromSphere(in Sphere<N> sphere) => new(sphere.center - sphere.Radius, new(sphere.Radius * N.CreateChecked(2)));
+    public static Box<N> FromSphere(in Sphere<N> sphere)
+    {
+        return new(
+            sphere.center - sphere.Radius,
+            new(sphere.Radius * N.CreateTruncating(2)));
+    }
+
     public void EnforceConstraint()
     {
-        var zero = N.CreateChecked(0);
+        var zero = N.CreateTruncating(0);
         if (_size.x < zero) { _size.x = zero; }
         if (_size.y < zero) { _size.y = zero; }
         if (_size.z < zero) { _size.z = zero; }

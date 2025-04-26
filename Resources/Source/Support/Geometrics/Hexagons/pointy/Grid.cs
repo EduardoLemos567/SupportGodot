@@ -18,16 +18,16 @@ public class Grid<F> where F : IFloatingPoint<F>
     {
         HexagonSize = hexagonSize;
         Count = count;
-        HexagonHalfWidth = HexagonSize.x / F.CreateChecked(2);
-        HexagonQuarterHeight = HexagonSize.y / F.CreateChecked(4);
-        usedOffset = new Vec2<F>(HexagonHalfWidth, HexagonQuarterHeight * F.CreateChecked(2));
+        HexagonHalfWidth = HexagonSize.x / F.CreateTruncating(2);
+        HexagonQuarterHeight = HexagonSize.y / F.CreateTruncating(4);
+        usedOffset = new Vec2<F>(HexagonHalfWidth, HexagonQuarterHeight * F.CreateTruncating(2));
         var s = new Vec2<F>(
-            F.CreateChecked(2 * Count.x) * HexagonHalfWidth + (Count.y > 1 ? HexagonHalfWidth : F.CreateChecked(0)),
+            F.CreateChecked(2 * Count.x) * HexagonHalfWidth + (Count.y > 1 ? HexagonHalfWidth : F.CreateTruncating(0)),
             F.CreateChecked(3 * Count.y) * HexagonQuarterHeight + HexagonQuarterHeight);    //TODO: test
         Bounds = new() { Size = s };
         {
             var po = new Vec2<F>[6];
-            po[(int)E_POINT.UP] = new(F.CreateChecked(0), -HexagonQuarterHeight * F.CreateChecked(2));
+            po[(int)E_POINT.UP] = new(F.CreateTruncating(0), -HexagonQuarterHeight * F.CreateTruncating(2));
             po[(int)E_POINT.UP_RIGHT] = new(HexagonHalfWidth, -HexagonQuarterHeight);
             po[(int)E_POINT.DOWN_RIGHT] = new(HexagonHalfWidth, HexagonQuarterHeight);
             po[(int)E_POINT.DOWN] = -po[(int)E_POINT.UP];
@@ -41,9 +41,9 @@ public class Grid<F> where F : IFloatingPoint<F>
     {
         var c = coordinate.offset.CastTo<F>();
         // If odd: offset of a halfwidth
-        var oddOffset = Toolbox.IsEven(coordinate.offset.y) ? F.CreateChecked(0) : HexagonHalfWidth;
+        var oddOffset = Toolbox.IsEven(coordinate.offset.y) ? F.CreateTruncating(0) : HexagonHalfWidth;
         // offset + width * coord.x, 3 * quarter height * coord.y)
-        return usedOffset + new Vec2<F>(oddOffset + HexagonSize.x * c.x, F.CreateChecked(3) * HexagonQuarterHeight * c.y);
+        return usedOffset + new Vec2<F>(oddOffset + HexagonSize.x * c.x, F.CreateTruncating(3) * HexagonQuarterHeight * c.y);
     }
     public Coordinate FindCoordinate(in Vec2<F> position)
     {
@@ -91,5 +91,5 @@ public class Grid<F> where F : IFloatingPoint<F>
             }
         }
     }
-    private static Vec2<F> HexagonSizeFromRadius(F radius) => new(radius * F.CreateChecked(Toolbox.SQR3), radius * F.CreateChecked(2));
+    private static Vec2<F> HexagonSizeFromRadius(F radius) => new(radius * F.CreateTruncating(Toolbox.SQR3), radius * F.CreateTruncating(2));
 }

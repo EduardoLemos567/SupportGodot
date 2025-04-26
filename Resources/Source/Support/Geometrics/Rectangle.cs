@@ -26,8 +26,8 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     }
     public Vec2<N> Center
     {
-        readonly get => Size / N.CreateChecked(2) + min;
-        set => min = value - Size / N.CreateChecked(2);
+        readonly get => Size / N.CreateTruncating(2) + min;
+        set => min = value - Size / N.CreateTruncating(2);
     }
     /// <summary>
     /// Always positive. Negative values become zero.
@@ -45,7 +45,7 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     }
     public void EnforceConstraint()
     {
-        var zero = N.CreateChecked(0);
+        var zero = N.CreateTruncating(0);
         if (_size.x < zero) { _size.x = zero; }
         if (_size.y < zero) { _size.y = zero; }
     }
@@ -56,11 +56,15 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
         Center = center;
     }
     public readonly bool IsPointIn(in Vec2<N> point) => (point >= min).AllTrue && (point <= Max).AllTrue;
-    public readonly Vec2<N> Clamp(Vec2<N> point)
+    public readonly Vec2<N> Clamp(in Vec2<N> point)
     {
         var max = Max;
         return new(N.Clamp(point.x, min.x, max.x), N.Clamp(point.y, min.y, max.y));
     }
+    /// <summary>
+    /// Resize the rectangle to encapsulate the given point.
+    /// </summary>
+    /// <param name="point"></param>
     public void Encapsulates(in Vec2<N> point)
     {
         if (IsPointIn(point)) { return; }

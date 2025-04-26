@@ -16,7 +16,7 @@ public struct Range<T> : IConstraintable where T : INumber<T>
         readonly get => max;
         set { max = value; EnforceConstraint(); }
     }
-    public readonly T Mid => Delta / T.CreateChecked(2);
+    public readonly T Mid => Delta / T.CreateTruncating(2);
     public readonly T Delta => max - min;
     public Range(in T min, in T max)
     {

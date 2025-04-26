@@ -220,7 +220,7 @@ namespace Support
         public static N Modulo<N>(N x, N m) where N : INumber<N>
         {
             var r = x % m;
-            return r < N.CreateChecked(0) ? r + m : r;
+            return r < N.CreateTruncating(0) ? r + m : r;
         }
         /// <summary>
         /// Convert a sequence of input numbers to cultural invariant ToString.

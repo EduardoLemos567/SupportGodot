@@ -6,14 +6,12 @@ public class Logger : ILogger
 {
     private static readonly Stopwatch beginClock = Stopwatch.StartNew();
     private readonly string name;
-    private readonly E_LOG_LEVEL level;
-    private readonly E_LOG_TYPE type;
+    private readonly ILoggerSettings loggerSettings;
     private readonly FileLogWriter? fileLogger;
-    public Logger(string name, E_LOG_LEVEL level, E_LOG_TYPE type, FileLogWriter? fileLogger)
+    public Logger(string name, ILoggerSettings loggerSettings, FileLogWriter? fileLogger)
     {
         this.name = name;
-        this.level = level;
-        this.type = type;
+        this.loggerSettings = loggerSettings;
         this.fileLogger = fileLogger;
     }
     public void Error(params object[] objs) => Print(E_LOG_LEVEL.ERROR, objs);
@@ -27,10 +25,10 @@ public class Logger : ILogger
     /// <param name="sector"></param>
     public void Lap(Stopwatch stopwatch, string sector)
     {
-        if (!level.HasFlag(E_LOG_LEVEL.LAP)) { return; }
+        if (!loggerSettings.Level.HasFlag(E_LOG_LEVEL.LAP)) { return; }
         var msg = FormatMessage($"@ {sector} took: {stopwatch.Elapsed}");
         var color = stopwatch.Elapsed.Seconds < 1 ? ConsoleLogWriter.PRINT_COLOR.GREEN : ConsoleLogWriter.PRINT_COLOR.YELLOW;
-        if (type.HasFlag(E_LOG_TYPE.CONSOLE))
+        if (loggerSettings.Type.HasFlag(E_LOG_TYPE.CONSOLE))
         {
             ConsoleLogWriter.Print(msg, color);
         }
@@ -49,7 +47,7 @@ public class Logger : ILogger
             E_LOG_LEVEL.DEBUG => ConsoleLogWriter.PRINT_COLOR.GREEN,
             _ => ConsoleLogWriter.PRINT_COLOR.DEFAULT
         };
-        if (type.HasFlag(E_LOG_TYPE.CONSOLE))
+        if (loggerSettings.Type.HasFlag(E_LOG_TYPE.CONSOLE))
         {
             ConsoleLogWriter.Print(msg, color);
         }
