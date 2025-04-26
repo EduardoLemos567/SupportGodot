@@ -93,7 +93,7 @@ public class SurfaceArray
     }
     public ArrayMesh AddSurfaceToArrayMesh(ArrayMesh? arrayMesh = null)
     {
-        arrayMesh ??= new ArrayMesh();
+        arrayMesh ??= new();
         arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, ToArray());
         return arrayMesh;
     }
