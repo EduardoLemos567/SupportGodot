@@ -8,15 +8,15 @@ namespace Support.Numerics;
 public static class Vec2Extensions
 {
     #region FLOAT_POINT_ONLY
-    public static Vec2<T> Round<F, T>(in this Vec2<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Round(self.x)),
-        T.CreateChecked(F.Round(self.y)));
-    public static Vec2<T> Ceil<F, T>(in this Vec2<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Ceiling(self.x)),
-        T.CreateChecked(F.Ceiling(self.y)));
-    public static Vec2<T> Floor<F, T>(in this Vec2<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Floor(self.x)),
-        T.CreateChecked(F.Floor(self.y)));
+    public static Vec2<N> Round<F, N>(in this Vec2<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Round(self.x)),
+        N.CreateChecked(F.Round(self.y)));
+    public static Vec2<N> Ceil<F, N>(in this Vec2<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Ceiling(self.x)),
+        N.CreateChecked(F.Ceiling(self.y)));
+    public static Vec2<N> Floor<F, N>(in this Vec2<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Floor(self.x)),
+        N.CreateChecked(F.Floor(self.y)));
     public static F Magnitude<F>(in this Vec2<F> self) where F : IFloatingPoint<F>
     {
         return F.CreateChecked(Math.Sqrt(double.CreateChecked(self.SqrMagnitude())));

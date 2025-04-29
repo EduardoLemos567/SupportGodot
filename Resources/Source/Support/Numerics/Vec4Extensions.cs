@@ -7,21 +7,21 @@ namespace Support.Numerics;
 public static class Vec4Extensions
 {
     #region FLOAT_POINT_ONLY
-    public static Vec4<T> Round<F, T>(in this Vec4<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Round(self.x)),
-        T.CreateChecked(F.Round(self.y)),
-        T.CreateChecked(F.Round(self.z)),
-        T.CreateChecked(F.Round(self.w)));
-    public static Vec4<T> Ceil<F, T>(in this Vec4<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Ceiling(self.x)),
-        T.CreateChecked(F.Ceiling(self.y)),
-        T.CreateChecked(F.Ceiling(self.z)),
-        T.CreateChecked(F.Ceiling(self.w)));
-    public static Vec4<T> Floor<F, T>(in this Vec4<F> self) where F : IFloatingPoint<F> where T : INumber<T> => new(
-        T.CreateChecked(F.Floor(self.x)),
-        T.CreateChecked(F.Floor(self.y)),
-        T.CreateChecked(F.Floor(self.z)),
-        T.CreateChecked(F.Floor(self.w)));
+    public static Vec4<N> Round<F, N>(in this Vec4<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Round(self.x)),
+        N.CreateChecked(F.Round(self.y)),
+        N.CreateChecked(F.Round(self.z)),
+        N.CreateChecked(F.Round(self.w)));
+    public static Vec4<N> Ceil<F, N>(in this Vec4<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Ceiling(self.x)),
+        N.CreateChecked(F.Ceiling(self.y)),
+        N.CreateChecked(F.Ceiling(self.z)),
+        N.CreateChecked(F.Ceiling(self.w)));
+    public static Vec4<N> Floor<F, N>(in this Vec4<F> self) where F : IFloatingPoint<F> where N : INumber<N> => new(
+        N.CreateChecked(F.Floor(self.x)),
+        N.CreateChecked(F.Floor(self.y)),
+        N.CreateChecked(F.Floor(self.z)),
+        N.CreateChecked(F.Floor(self.w)));
     public static F Magnitude<F>(in this Vec4<F> self) where F : IFloatingPoint<F>
     {
         return F.CreateChecked(Math.Sqrt(double.CreateChecked(self.SqrMagnitude())));

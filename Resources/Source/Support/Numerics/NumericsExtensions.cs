@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Support.Numerics;
 
@@ -36,5 +37,20 @@ public static class NumericsExtensions
     /// <typeparam name="N"></typeparam>
     /// <param name="n"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static N SqrtSaturated<N>(this N n) where N : INumber<N> => N.CreateSaturating(double.Sqrt(double.CreateSaturating(n)));
+    /// <summary>
+    /// Inverse Lerp function. It returns a value between 0 and 1 that represents the position of value between a and b.
+    /// </summary>
+    /// <typeparam name="N"></typeparam>
+    /// <param name="t"></param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
+    public static N InverseLerp<N>(this N t, N a, N b) where N : INumber<N>
+    {
+        if (a == b) { return N.One; }
+        return (t - a) / (b - a);
+    }
 }
