@@ -23,8 +23,18 @@ public static class NumericsExtensions
             _ => throw new NotSupportedException("Type not supported"),
         };
     }
-    public static bool IsInteger<T>(this T value) where T : INumber<T>
+    public static bool IsInteger<T>(this T value) where T : INumber<T> => T.IsInteger(value);
+    public static bool IsApproximate<F>(this F self, in F target, F? proximity = null) where F : struct, IFloatingPoint<F>
     {
-        return T.IsInteger(value);
+        if (self == target) { return true; }
+        if (!proximity.HasValue) { proximity = F.CreateChecked(Toolbox.PROXIMITY_DISTANCE); }
+        return F.Abs(target - self) < proximity;
     }
+    /// <summary>
+    /// Apply the <see cref="double.Sqrt"/> and saturate (clamp) the result in the range of MinValue and MaxValue of the type.
+    /// </summary>
+    /// <typeparam name="N"></typeparam>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static N SqrtSaturated<N>(this N n) where N : INumber<N> => N.CreateSaturating(double.Sqrt(double.CreateSaturating(n)));
 }

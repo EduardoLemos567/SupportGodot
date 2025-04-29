@@ -53,6 +53,14 @@ public static class Vec3Extensions
     {
         return (target - self).Normalized();
     }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vec3<float> Lerp(in this Vec3<float> self, in Vec3<float> target, float t)
+    {
+        return new(
+            float.Lerp(self.x, target.x, t),
+            float.Lerp(self.y, target.y, t),
+            float.Lerp(self.z, target.z, t));
+    }
     #endregion FLOAT_POINT_ONLY
     // System vector
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

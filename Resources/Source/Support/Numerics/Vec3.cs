@@ -10,6 +10,7 @@ public struct Vec3<N> : IVectorNumber<N> where N : INumber<N>
 {
     public static readonly Vec3<N> Zero = CreateFrom(0, 0, 0);
     public static readonly Vec3<N> One = CreateFrom(1, 1, 1);
+    public static readonly Vec3<N> Half = CreateFrom(0.5f, 0.5f, 0.5f);
     public static readonly Vec3<N> Up = CreateFrom(0, 1, 0);
     public static readonly Vec3<N> Down = CreateFrom(0, -1, 0);
     public static readonly Vec3<N> Left = CreateFrom(1, 0, 0);

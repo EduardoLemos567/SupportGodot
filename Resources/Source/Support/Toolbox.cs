@@ -13,15 +13,12 @@ namespace Support
 {
     public static class Toolbox
     {
-        public const float CLOSE_ENOUGH = 0.0001f;
-        public const float SQR_CLOSE_ENOUGH = CLOSE_ENOUGH * CLOSE_ENOUGH;
+        public const float PROXIMITY_DISTANCE = 0.001f;
+        public const float SQR_PROXIMITY_DISTANCE = PROXIMITY_DISTANCE * PROXIMITY_DISTANCE;
         public const int NULL_INDEX = -1;
         public static readonly float SQR2 = float.Sqrt(2);
         public static readonly float SQR3 = float.Sqrt(3);
-        public static readonly Vec2<float> HalfVector2 = new(0.5f, 0.5f);
-        public static readonly Vec2<float> CloseEnoughVector2 = new(CLOSE_ENOUGH, CLOSE_ENOUGH);
-        public static readonly Rectangle<float> RectOne = new(Vec2<float>.Zero, Vec2<float>.One);
-        public static int ISqrt(int n) => (int)float.Sqrt(n);
+        
         /// <summary>
         /// Turn 1.2345 into 1.23 if places = 2, into 1.234 if places = 3
         /// </summary>
@@ -217,7 +214,7 @@ namespace Support
         /// <param name="m">divisor</param>
         /// <returns>modulo</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static N Modulo<N>(N x, N m) where N : INumber<N>
+        public static N PositiveModulo<N>(N x, N m) where N : INumber<N>
         {
             var r = x % m;
             return r < N.CreateTruncating(0) ? r + m : r;

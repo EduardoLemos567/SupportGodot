@@ -11,6 +11,7 @@ namespace Support.Geometrics;
 /// <typeparam name="N"></typeparam>
 public struct Rectangle<N> : IConstraintable where N : INumber<N>
 {
+    public static readonly Rectangle<N> One = new(Vec2<N>.Zero, Vec2<N>.One);
     /// <summary>
     /// Top Left position.
     /// </summary>

@@ -53,8 +53,8 @@ public static class ListExtensions
     #endregion ILIST
     #region IREADONLYLIST
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int LoopIndex<T>(this IReadOnlyList<T> ilist, int index) => Toolbox.Modulo(index, ilist.Count);
+    public static int LoopIndex<T>(this IReadOnlyList<T> ilist, int index) => Toolbox.PositiveModulo(index, ilist.Count);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T GetOnLoopIndex<T>(this IReadOnlyList<T> ilist, int index) => ilist[Toolbox.Modulo(index, ilist.Count)];
+    public static T GetOnLoopIndex<T>(this IReadOnlyList<T> ilist, int index) => ilist[Toolbox.PositiveModulo(index, ilist.Count)];
     #endregion IREADONLYLIST
 }
