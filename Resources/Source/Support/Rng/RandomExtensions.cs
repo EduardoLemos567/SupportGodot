@@ -19,16 +19,14 @@ public static class RandomExtensions
     private static readonly Range<int> charUpperRange = new(65, 90);
     public static bool GetTrueByChance<F>(this IRng rng, F chance) where F : IFloatingPoint<F>
     {
-        var zero = F.CreateTruncating(0);
-        var one = F.CreateTruncating(1);
-        return chance > zero && (chance >= one || rng.GetNumber(zero, one) <= chance);
+        return chance > F.Zero && (chance >= F.One || rng.GetNumber(F.Zero, F.One) <= chance);
     }
 
     public static N GetPointIn<N>(this IRng rng, in Range<N> range) where N : INumber<N> => rng.GetNumber(range.Min, range.Max);
     public static Vec2<N> GetPointIn<N>(this IRng rng, in Rectangle<N> rect) where N : INumber<N> => rng.GetVec2(rect.min, rect.Max);
     public static Vec2<N> GetPointIn<N>(this IRng rng, in Circle<N> circle) where N : INumber<N>
     {
-        var randomCircle = new Circle<N>() { center = circle.center, Radius = rng.GetNumber(N.CreateTruncating(0), circle.Radius) };
+        var randomCircle = new Circle<N>() { center = circle.center, Radius = rng.GetNumber(N.Zero, circle.Radius) };
         return randomCircle.GetPointInCircumference(RadianAngle.RandomAngle(rng));
     }
     public static string GetString(this IRng rng, int count, bool includeLower = true, bool includeUpper = true) => string.Create<(IRng rng, bool lower, bool upper)>(count, (rng, includeLower, includeUpper), CreateString);

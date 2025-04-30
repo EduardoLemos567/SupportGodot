@@ -41,10 +41,9 @@ public struct Box<N> : IConstraintable where N : INumber<N>
 
     public void EnforceConstraint()
     {
-        var zero = N.CreateTruncating(0);
-        if (_size.x < zero) { _size.x = zero; }
-        if (_size.y < zero) { _size.y = zero; }
-        if (_size.z < zero) { _size.z = zero; }
+        if (_size.x < N.Zero) { _size.x = N.Zero; }
+        if (_size.y < N.Zero) { _size.y = N.Zero; }
+        if (_size.z < N.Zero) { _size.z = N.Zero; }
     }
     public readonly bool IsPointIn(in Vec3<N> point) => (point >= min).AllTrue && (point <= Max).AllTrue;
     public readonly bool IsBoxIn(in Box<N> other) => IsPointIn(other.min) && IsPointIn(other.Max);

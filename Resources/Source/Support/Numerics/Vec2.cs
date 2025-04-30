@@ -135,11 +135,11 @@ public struct Vec2<N> : IVectorNumber<N> where N : INumber<N>
     #endregion MATH_OPERATORS
     #region LOGIC_OPERATORS
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Bool2 operator ==(in Vec2<N> a, Vec2<N> b) => new(
+    public static Bool2 operator ==(in Vec2<N> a, in Vec2<N> b) => new(
         a.x == b.x,
         a.y == b.y);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Bool2 operator !=(in Vec2<N> a, Vec2<N> b) => new(
+    public static Bool2 operator !=(in Vec2<N> a, in Vec2<N> b) => new(
         a.x != b.x,
         a.y != b.y);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

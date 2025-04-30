@@ -23,8 +23,7 @@ public struct Circle<N> : IConstraintable where N : INumber<N>
     }
     public void EnforceConstraint()
     {
-        var zero = N.CreateTruncating(0);
-        if (_radius < zero) { _radius = zero; }
+        if (_radius < N.Zero) { _radius = N.Zero; }
     }
     public readonly Vec2<N> GetPointInCircumference(in RadianAngle radianAngle)
     {

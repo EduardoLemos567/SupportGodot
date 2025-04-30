@@ -6,7 +6,6 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using Godot;
 using Support.Diagnostics;
-using Support.Geometrics;
 using Support.Numerics;
 
 namespace Support
@@ -18,7 +17,7 @@ namespace Support
         public const int NULL_INDEX = -1;
         public static readonly float SQR2 = float.Sqrt(2);
         public static readonly float SQR3 = float.Sqrt(3);
-        
+
         /// <summary>
         /// Turn 1.2345 into 1.23 if places = 2, into 1.234 if places = 3
         /// </summary>
@@ -217,7 +216,7 @@ namespace Support
         public static N PositiveModulo<N>(N x, N m) where N : INumber<N>
         {
             var r = x % m;
-            return r < N.CreateTruncating(0) ? r + m : r;
+            return r < N.Zero ? r + m : r;
         }
         /// <summary>
         /// Convert a sequence of input numbers to cultural invariant ToString.

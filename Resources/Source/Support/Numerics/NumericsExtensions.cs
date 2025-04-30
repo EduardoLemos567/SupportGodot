@@ -42,15 +42,29 @@ public static class NumericsExtensions
     /// <summary>
     /// Inverse Lerp function. It returns a value between 0 and 1 that represents the position of value between a and b.
     /// </summary>
-    /// <typeparam name="N"></typeparam>
+    /// <typeparam name="F"></typeparam>
     /// <param name="t"></param>
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]    
-    public static N InverseLerp<N>(this N t, N a, N b) where N : INumber<N>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static F InverseLerp<F>(this F t, F a, F b) where F : IFloatingPoint<F>
     {
-        if (a == b) { return N.One; }
+        if (a == b) { return F.One; }
         return (t - a) / (b - a);
+    }
+    /// <summary>
+    /// Lerp function. It returns a value between a and b that represents the position of value between a and b.
+    /// </summary>
+    /// <typeparam name="F"></typeparam>
+    /// <param name="t"></param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static F Lerp<F>(this F t, F a, F b) where F : IFloatingPoint<F>
+    {
+        if (a == b) { return b; }
+        return a + (b - a) * t;
     }
 }

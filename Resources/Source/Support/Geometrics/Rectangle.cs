@@ -46,9 +46,8 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     }
     public void EnforceConstraint()
     {
-        var zero = N.CreateTruncating(0);
-        if (_size.x < zero) { _size.x = zero; }
-        if (_size.y < zero) { _size.y = zero; }
+        if (_size.x < N.Zero) { _size.x = N.Zero; }
+        if (_size.y < N.Zero) { _size.y = N.Zero; }
     }
     public void GrowInPlace(in Vec2<N> grow)
     {
