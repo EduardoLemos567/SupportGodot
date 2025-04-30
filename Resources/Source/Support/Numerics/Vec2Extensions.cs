@@ -47,11 +47,11 @@ public static class Vec2Extensions
         return (target - self).Normalized();
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vec2<float> Lerp(in this Vec2<float> self, in Vec2<float> target, float t)
+    public static Vec2<F> LerpTo<F>(in this Vec2<F> self, in Vec2<F> target, F t) where F : IFloatingPoint<F>
     {
         return new(
-            float.Lerp(self.x, target.x, t),
-            float.Lerp(self.y, target.y, t));
+            t.LerpBetween(self.x, target.x),
+            t.LerpBetween(self.y, target.y));
     }
     #endregion FLOAT_POINT_ONLY
     public static IEnumerable<Vec2<int>> EnumeratePositions(this Vec2<int> vec)

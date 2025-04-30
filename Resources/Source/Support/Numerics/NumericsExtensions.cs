@@ -48,7 +48,7 @@ public static class NumericsExtensions
     /// <param name="b"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static F InverseLerp<F>(this F t, F a, F b) where F : IFloatingPoint<F>
+    public static F InverseLerpBetween<F>(this F t, F a, F b) where F : IFloatingPoint<F>
     {
         if (a == b) { return F.One; }
         return (t - a) / (b - a);
@@ -62,7 +62,7 @@ public static class NumericsExtensions
     /// <param name="b"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static F Lerp<F>(this F t, F a, F b) where F : IFloatingPoint<F>
+    public static F LerpBetween<F>(this F t, F a, F b) where F : IFloatingPoint<F>
     {
         if (a == b) { return b; }
         return a + (b - a) * t;
