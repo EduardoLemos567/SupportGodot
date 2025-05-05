@@ -31,6 +31,12 @@ public static class Vec4Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec4<F> Normalized<F>(in this Vec4<F> self) where F : IFloatingPoint<F> => self / self.Magnitude();
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void NormalizedAndMagnitude<F>(in this Vec4<F> self, out Vec4<F> normalized, out F magnitude) where F : IFloatingPoint<F>
+    {
+        magnitude = self.Magnitude();
+        normalized = self / magnitude;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsApproximate<F>(in this Vec4<F> self, in Vec4<F> target, F? proximity = null) where F : struct, IFloatingPoint<F>
     {
         if (!proximity.HasValue) { proximity = IVectorNumber<F>.PROXIMITY_DISTANCE; }

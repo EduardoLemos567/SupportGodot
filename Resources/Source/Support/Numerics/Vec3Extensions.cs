@@ -28,6 +28,12 @@ public static class Vec3Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec3<F> Normalized<F>(in this Vec3<F> self) where F : IFloatingPoint<F> => self / self.Magnitude();
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void NormalizedAndMagnitude<F>(in this Vec3<F> self, out Vec3<F> normalized, out F magnitude) where F : IFloatingPoint<F>
+    {
+        magnitude = self.Magnitude();
+        normalized = self / magnitude;
+    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec3<T> CrossProduct<T>(in this Vec3<T> self, in Vec3<T> target) where T : IFloatingPoint<T> => new(
         self.y * target.z - self.z * target.y,
         self.z * target.x - self.x * target.z,
