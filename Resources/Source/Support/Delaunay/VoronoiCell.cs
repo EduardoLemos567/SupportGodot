@@ -41,7 +41,7 @@ public struct VoronoiCell
         Debug.Assert(this.border.Length >= MIN_POINTS, $"points.Length is less than {MIN_POINTS}, not enough to return a triangle");
         IsClosed = isClosed;
     }
-    public readonly IEnumerable<Triangle2<double>> GetTriangles()
+    public readonly IEnumerable<Triangle2D<double>> GetTriangles()
     {
         var last = border.Length - 1;
         for (var i = 0; i < last; i++)

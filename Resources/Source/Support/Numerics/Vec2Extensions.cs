@@ -74,7 +74,7 @@ public static class Vec2Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec2<N> ToVec2<N>(in this Vector2 self) where N : INumber<N> => Vec2<N>.CreateFrom(self.X, self.Y);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vec2<float> ToVec2(in this Vector2 self) => ToVec2(self);
+    public static Vec2<float> ToVec2(in this Vector2 self) => ToVec2<float>(self);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2 ToVector2(in this Vec2<float> self) => new(self.x, self.y);
 }

@@ -17,7 +17,7 @@ namespace Support.Delaunay
         public readonly Vec2<double> C;
         public readonly int index;
         public readonly AdjacentTriangles adjacent;
-        public DelaunayTriangle(in Triangle2<double> points,
+        public DelaunayTriangle(in Triangle2D<double> points,
                         int index,
                         in AdjacentTriangles adjacentTriangles)
         {
@@ -27,13 +27,13 @@ namespace Support.Delaunay
             this.index = index;
             adjacent = adjacentTriangles;
         }
-        public static implicit operator Triangle2<float>(in DelaunayTriangle triangle) => new()
+        public static implicit operator Triangle2D<float>(in DelaunayTriangle triangle) => new()
         {
             A = triangle.A.CastTo<float>(),
             B = triangle.B.CastTo<float>(),
             C = triangle.C.CastTo<float>()
         };
-        public static implicit operator Triangle2<double>(in DelaunayTriangle triangle) => new()
+        public static implicit operator Triangle2D<double>(in DelaunayTriangle triangle) => new()
         {
             A = triangle.A,
             B = triangle.B,

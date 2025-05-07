@@ -71,7 +71,7 @@ public static class Vec4Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec4<N> ToVec4<N>(in this Vector4 self) where N : INumber<N> => Vec4<N>.CreateFrom(self.X, self.Y, self.Z, self.W);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vec4<float> ToVec4(in this Vector4 self) => ToVec4(self);
+    public static Vec4<float> ToVec4(in this Vector4 self) => ToVec4<float>(self);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4 ToVector4(in this Vec4<float> self) => new(self.x, self.y, self.z, self.w);
 }

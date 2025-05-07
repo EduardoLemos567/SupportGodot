@@ -38,7 +38,7 @@ public readonly struct Hexagon<F> where F : IFloatingPoint<F>
     public readonly Vec2<F> GetBorderPoint(in E_POINT point) => center + pointOffsets[(int)point];
     public bool IsPointIn(in Vec2<F> point)
     {
-        Segment2<F> s;
+        Segment2D<F> s;
         Vec2<F> h, v;
         if (point.y <= center.y)
         {   // upper slice

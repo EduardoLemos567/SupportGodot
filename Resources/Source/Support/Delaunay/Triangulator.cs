@@ -642,7 +642,7 @@ public class Triangulator
     /// <summary>
     /// Returns the three point indices of a given triangle id.
     /// </summary>
-    public Triangle2<double> GetPointsOfTriangle(int triangleIndex)
+    public Triangle2D<double> GetPointsOfTriangle(int triangleIndex)
     {
         var tri = GetEdgesOfTriangle(triangleIndex);
         return new()

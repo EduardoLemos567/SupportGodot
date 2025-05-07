@@ -57,7 +57,7 @@ public class Grid<F> where F : IFloatingPoint<F>
         {   // top triangle slice
             var c = GetCenterPoint(coordinate);
             var v = c + PointOffsets[(int)E_POINT.UP];
-            Segment2<F> s;
+            Segment2D<F> s;
             if (position.x <= c.x)
             {   // left slice
                 s = new(v, c + PointOffsets[(int)E_POINT.UP_LEFT]);

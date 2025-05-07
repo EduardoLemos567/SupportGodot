@@ -230,5 +230,10 @@ namespace Support
         public static int GridToIndex(in Vec2<int> g, int width) => g.y * width + g.x;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vec2<int> IndexToGrid(int index, int width) => new(index % width, index / width);
+        public static Vec2<float> Rotate2DTransform(float angleDegree, in Vec2<float> vector)
+        {
+            var (sin, cos) = Mathf.SinCos(Mathf.DegToRad(angleDegree));
+            return new Vec2<float>(vector.x * cos + vector.y * sin, -vector.x * sin + vector.y * cos);
+        }
     }
 }

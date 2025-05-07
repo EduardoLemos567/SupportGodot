@@ -7,16 +7,16 @@ namespace Support.Geometrics;
 /// This will represent a triangle positions in 2D space.
 /// </summary>
 /// <typeparam name="N"></typeparam>
-public struct Triangle2<N> where N : INumber<N>
+public struct Triangle2D<N> where N : INumber<N>
 {
     public Vec2<N> A;
     public Vec2<N> B;
     public Vec2<N> C;
-    public readonly Segment2<N> AB => new() { start = A, end = B };
-    public readonly Segment2<N> BC => new() { start = B, end = C };
-    public readonly Segment2<N> CA => new() { start = C, end = A };
+    public readonly Segment2D<N> AB => new() { start = A, end = B };
+    public readonly Segment2D<N> BC => new() { start = B, end = C };
+    public readonly Segment2D<N> CA => new() { start = C, end = A };
     public readonly bool IsClockwise => AB.IsPointRight(C) && BC.IsPointRight(A);
-    public Triangle2(in Vec2<N> a, in Vec2<N> b, in Vec2<N> c)
+    public Triangle2D(in Vec2<N> a, in Vec2<N> b, in Vec2<N> c)
     {
         A = a;
         B = b;

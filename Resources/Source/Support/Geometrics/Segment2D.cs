@@ -7,13 +7,13 @@ namespace Support.Geometrics;
 /// This will represent a line segment with begining and end in 2d space.
 /// </summary>
 /// <typeparam name="N"></typeparam>
-public struct Segment2<N> where N : INumber<N>
+public struct Segment2D<N> where N : INumber<N>
 {
     public Vec2<N> start;
     public Vec2<N> end;
     public readonly Vec2<N> Direction => end - start;
-    public readonly Segment2<N> Inverted => new() { start = end, end = start };
-    public Segment2(in Vec2<N> start, in Vec2<N> end)
+    public readonly Segment2D<N> Inverted => new() { start = end, end = start };
+    public Segment2D(in Vec2<N> start, in Vec2<N> end)
     {
         this.start = start;
         this.end = end;

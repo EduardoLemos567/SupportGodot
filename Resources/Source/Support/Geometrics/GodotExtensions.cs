@@ -25,7 +25,7 @@ public static class GodotExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rectangle<N> ToRectangle<N>(in this GodotRect2I from) where N : INumber<N> => Rectangle<N>.CreateFrom(from.Position.ToVec2(), from.Size.ToVec2());
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Rectangle<int> ToRectangle(in this GodotRect2I from) => ToRectangle(from);
+    public static Rectangle<int> ToRectangle(in this GodotRect2I from) => ToRectangle<int>(from);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GodotRect2I ToGodotRect2I(in this Rectangle<int> from) => new(from.min.ToGodotVector2I(), from.Size.ToGodotVector2I());
 }

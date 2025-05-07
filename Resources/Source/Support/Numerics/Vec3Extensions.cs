@@ -72,7 +72,7 @@ public static class Vec3Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec3<N> ToVec3<N>(in this Vector3 self) where N : INumber<N> => Vec3<N>.CreateFrom(self.X, self.Y, self.Z);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vec3<float> ToVec3(in this Vector3 self) => ToVec3(self);
+    public static Vec3<float> ToVec3(in this Vector3 self) => ToVec3<float>(self);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector3 ToVector3(in this Vec3<float> self) => new(self.x, self.y, self.z);
 }
