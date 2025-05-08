@@ -70,7 +70,7 @@ public struct RadianAngle : IConstraintable
         EnforceConstraint();
     }
     public void EnforceConstraint() => _radian = RADIAN_RANGE.Modulo(_radian);
-    public static RadianAngle RandomAngle(in IRng rng) => new(rng.GetPointIn(RADIAN_RANGE));
+    public static RadianAngle RandomAngle(in ARng rng) => new(rng.GetPointIn(RADIAN_RANGE));
     public static RadianAngle operator +(in RadianAngle range, float value) => new(range.Radian + value);
     public static RadianAngle operator -(in RadianAngle range, float value) => new(range.Radian - value);
     public static RadianAngle operator *(in RadianAngle range, float value) => new(range.Radian * value);

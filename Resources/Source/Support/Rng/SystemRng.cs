@@ -7,18 +7,11 @@ namespace Support.Rng;
 /// <summary>
 /// System representation of .NET Random continual rng.
 /// </summary>
-public class SystemRng : IRng
+public class SystemRng : ARng
 {
-    private Random state;
-    public static SystemRng GlobalState { get; set; } = new(IRng.TimeSeed);
-    public int Seed { get; }
-    public SystemRng(int seed = 0)
-    {
-        if (seed == 0) { seed = 1; }
-        Seed = seed;
-        state = new(seed);
-    }
-    public SystemRng(object obj) : this(obj.GetHashCode()) { }
+    private Random state = null!;
+    public static SystemRng GlobalState { get; set; } = new(TimeSeed);
+    public SystemRng(object obj) : base(obj) { }
     /// <summary>
     /// Get a random number between min and max.
     /// <br>Supports only: int, float, double.</br>
@@ -28,7 +21,7 @@ public class SystemRng : IRng
     /// <param name="maxValue"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public T GetNumber<T>(T minValue, T maxValue) where T : INumber<T>
+    public override T GetNumber<T>(T minValue, T maxValue)
     {
         var type = typeof(T);
         if (type == typeof(int))
@@ -73,5 +66,5 @@ public class SystemRng : IRng
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Reset() => state = new(Seed);
+    public override void Reset() => state = new((int)Seed);
 }

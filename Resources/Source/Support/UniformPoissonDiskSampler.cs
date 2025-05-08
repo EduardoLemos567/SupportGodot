@@ -19,7 +19,7 @@ namespace Game
         private const double TWO_PI = PI * 2;
         private static readonly double SQRT_TWO = Math.Sqrt(2);
         //parameters
-        private readonly IRng rng;
+        private readonly ARng rng;
         private readonly Rectangle<double> rect;
         private readonly double minDistance;
         private readonly int pointsPerIteration;
@@ -32,7 +32,7 @@ namespace Game
         private readonly List<Vec2<double>> activePoints;
         private readonly List<Vec2<double>> points;
         public IReadOnlyList<Vec2<double>> GeneratedPoints => points;
-        private UniformPoissonDiskSampler(IRng rng, Rectangle<double> rect, double? rejectionDistance, double minDistance, int pointsPerIteration)
+        private UniformPoissonDiskSampler(ARng rng, Rectangle<double> rect, double? rejectionDistance, double minDistance, int pointsPerIteration)
         {
             this.rng = rng;
             this.rect = rect;
@@ -47,7 +47,7 @@ namespace Game
             this.points = [];
             Generate();
         }
-        public static UniformPoissonDiskSampler CircleSampler(IRng rng,
+        public static UniformPoissonDiskSampler CircleSampler(ARng rng,
                                                               in Vec2<double> center,
                                                               double radius,
                                                               double minDistance,
@@ -59,7 +59,7 @@ namespace Game
                        minDistance,
                        pointsPerIteration);
         }
-        public static UniformPoissonDiskSampler RectangleSampler(IRng rng,
+        public static UniformPoissonDiskSampler RectangleSampler(ARng rng,
                                                                  in Rectangle<double> rect,
                                                                  double minDistance,
                                                                  int pointsPerIteration = DEFAULT_POINTS_PER_ITERATION)

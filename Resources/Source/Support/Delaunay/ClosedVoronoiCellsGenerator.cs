@@ -37,7 +37,7 @@ namespace Support.Delaunay
         /// </summary>
         /// <param name="rng"></param>
         /// <param name="parameters"></param>
-        public ClosedVoronoiCellsGenerator(in IRng rng, in Parameters parameters)
+        public ClosedVoronoiCellsGenerator(in ARng rng, in Parameters parameters)
         {
             var bounds = parameters.gridRect;
             var points = GeneratePoints(rng, parameters, bounds);
@@ -55,7 +55,7 @@ namespace Support.Delaunay
             BorderIds = borderIds;
         }
         public int CalculateTriangleCount(in IEnumerable<int> ids) => (from id in ids select Cells[id].TrianglesCount).Sum();
-        private static List<Vec2<double>> GeneratePoints(in IRng rng, in Parameters parameters, in Rectangle<double> bounds)
+        private static List<Vec2<double>> GeneratePoints(in ARng rng, in Parameters parameters, in Rectangle<double> bounds)
         {
             var points = new List<Vec2<double>>(Mathf.RoundToInt(parameters.gridRepeat.x * parameters.gridRepeat.y * parameters.percentGridPoints));
             for (var i = 0; i < points.Capacity; i++)
