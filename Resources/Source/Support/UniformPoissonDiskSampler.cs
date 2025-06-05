@@ -117,7 +117,7 @@ namespace Game
                 {
                     for (var y = Mathf.Max(0, randomPointIndex.y - 2); y < Mathf.Min(gridSize.y, randomPointIndex.y + 3); y++)
                     {
-                        if (grid[x, y].HasValue && grid[x, y]!.Value.Distance(randomPoint) < minDistance)
+                        if (grid[x, y].HasValue && grid[x, y]!.Value.SqrDistance(randomPoint) < minDistance * minDistance)
                         {
                             return false;
                         }

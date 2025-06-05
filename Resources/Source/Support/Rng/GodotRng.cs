@@ -1,43 +1,40 @@
-﻿namespace Support.Rng;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Godot;
 
-// GODOT RNG is garbage, it uses inclusive endings, which is bad to pick items on a list, as it will try to pick the length value of the list.
+namespace Support.Rng;
 
-#if false
-public class GodotRng : IRng
+/// <summary>
+/// System representation of .NET Random continual rng.
+/// </summary>
+public class GodotRng : ARng
 {
-    private RandomNumberGenerator state;
-    public static GodotRng GlobalState { get; set; } = new(IRng.TimeSeed);
-    public int Seed { get; }
-    public GodotRng(int seed = 0)
-    {
-        if (seed == 0) { seed = 1; }
-        Seed = seed;
-        state = new() { Seed = (ulong)Seed };
-    }
-    public GodotRng(object obj) : this(obj.GetHashCode()) { }
+    private RandomNumberGenerator state = new();
+    public static GodotRng GlobalState { get; set; } = new(TimeSeed);
+    public GodotRng(object obj) : base(obj) { }
     /// <summary>
     /// Get a random number between min and max.
     /// <br>Supports only: int, float, double.</br>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public T GetNumber<T>(T min, T max) where T : INumber<T>
+    public override T GetNumber<T>(T minValue, T maxValue)
     {
         var type = typeof(T);
         if (type == typeof(int))
         {
-            return T.CreateChecked(GetInt(int.CreateChecked(min), int.CreateChecked(max)));
+            return T.CreateChecked(GetInt(int.CreateChecked(minValue), int.CreateChecked(maxValue)));
         }
         else if (type == typeof(float))
         {
-            return T.CreateChecked(GetFloat(float.CreateChecked(min), float.CreateChecked(max)));
+            return T.CreateChecked(GetFloat(float.CreateChecked(minValue), float.CreateChecked(maxValue)));
         }
         else if (type == typeof(double))
         {
-            return T.CreateChecked(GetDouble(double.CreateChecked(min), double.CreateChecked(max)));
+            return T.CreateChecked(GetDouble(double.CreateChecked(minValue), double.CreateChecked(maxValue)));
         }
         else
         {
@@ -45,12 +42,32 @@ public class GodotRng : IRng
         }
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private int GetInt(int minValue, int maxValue) => minValue == maxValue ? minValue : state.RandiRange(minValue, maxValue);
+    private int GetInt(int minValue, int maxValue)
+    {
+        if (minValue == maxValue) { return minValue; }
+        if (minValue > maxValue) { (minValue, maxValue) = (maxValue, minValue); }
+        return state.RandiRange(minValue, maxValue - 1);
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private float GetFloat(float minValue, float maxValue) => minValue == maxValue ? minValue : state.RandfRange(minValue, maxValue);
+    private float GetFloat(float minValue, float maxValue)
+    {
+        if (minValue == maxValue) { return minValue; }
+        if (minValue > maxValue) { (minValue, maxValue) = (maxValue, minValue); }
+        return minValue + (maxValue - minValue) * (state.Randf() - float.Epsilon);
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private double GetDouble(double minValue, double maxValue) => minValue == maxValue ? minValue : minValue + (maxValue - minValue) * state.Randf();
+    private double GetDouble(double minValue, double maxValue)
+    {
+        if (minValue == maxValue) { return minValue; }
+        if (minValue > maxValue) { (minValue, maxValue) = (maxValue, minValue); }
+        return minValue + (maxValue - minValue) * (state.Randf() - float.Epsilon);
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Reset() => state = new() { Seed = (ulong)Seed };
+    public override void Reset()
+    {
+        state.Seed = Seed;
+    }
 }
-#endif

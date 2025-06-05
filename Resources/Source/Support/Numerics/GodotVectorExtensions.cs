@@ -19,6 +19,9 @@ public static class GodotVectorExtensions
     public static Vec2<float> ToVec2(in this GodotVector2 from) => ToVec2<float>(from);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static GodotVector2 ToGodotVector2(in this Vec2<float> from) => new(from.x, from.y);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static GodotVector3 ToGodotVector3XZ(in this Vec2<float> from, float y = 0) => new(from.x, y, from.y);
     // GodotVector2I
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vec2<N> ToVec2<N>(in this GodotVector2I from) where N : INumber<N> => Vec2<N>.CreateFrom(from.X, from.Y);

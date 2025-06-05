@@ -7,6 +7,7 @@ namespace Support.Rng;
 public class SimpleRng : ARng
 {
     private uint state;
+    public static SimpleRng GlobalState { get; set; } = new(TimeSeed);
     public SimpleRng(object? seed = null) : base(seed) { }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public uint NextState()

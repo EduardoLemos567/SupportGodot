@@ -34,17 +34,19 @@ public static class Vec2Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsApproximate<F>(in this Vec2<F> self, in Vec2<F> target, F? proximity = null) where F : struct, IFloatingPoint<F>
     {
-        if (!proximity.HasValue) { proximity = IVectorNumber<F>.PROXIMITY_DISTANCE; }
-        return self.Distance(target) < proximity;
+        F prox = proximity ?? IVectorNumber<F>.PROXIMITY_DISTANCE;
+        return self.SqrDistance(target) < prox * prox;
     }
     public static Vec2<F> MoveTowards<F>(in this Vec2<F> self, in Vec2<F> target, F delta) where F : IFloatingPoint<F>
     {
         var diff = target - self;
-        var dist = diff.Magnitude();
-        if (dist <= delta || dist < IVectorNumber<F>.PROXIMITY_DISTANCE)
+        var sqrDist = diff.SqrMagnitude();
+        var minDist = IVectorNumber<F>.PROXIMITY_DISTANCE;
+        if (sqrDist <= delta * delta || sqrDist < minDist * minDist)
         {
             return target;
         }
+        var dist = F.CreateChecked(Math.Sqrt(double.CreateChecked(sqrDist)));
         return self + diff / dist * delta;
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
