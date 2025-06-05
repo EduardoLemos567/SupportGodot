@@ -100,6 +100,8 @@ public struct Vec3<N> : IVectorNumber<N> where N : INumber<N>
         N.Clamp(y, min.y, max.y),
         N.Clamp(z, min.z, max.z));
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public readonly N Multi() => x * y * z;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override readonly bool Equals(object? obj) => obj is Vec3<N> Vec3 && Equals(Vec3);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool Equals(in Vec3<N> other) => (this == other).AllTrue;

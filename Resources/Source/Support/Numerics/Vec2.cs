@@ -81,6 +81,8 @@ public struct Vec2<N> : IVectorNumber<N> where N : INumber<N>
         N.Clamp(x, min.x, max.x),
         N.Clamp(y, min.y, max.y));
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public readonly N Multi() => x * y;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override readonly bool Equals(object? target) => target is Vec2<N> Vec2 && Equals(Vec2);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool Equals(in Vec2<N> target) => (this == target).AllTrue;

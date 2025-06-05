@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Support.Numerics;
 
 namespace Support.Extensions;
 
@@ -57,4 +58,9 @@ public static class ListExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T GetOnLoopIndex<T>(this IReadOnlyList<T> ilist, int index) => ilist[Toolbox.PositiveModulo(index, ilist.Count)];
     #endregion IREADONLYLIST
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vec2<int> LengthVec2<T>(this T[,] array)
+    {
+        return new(array.GetLength(0), array.GetLength(1));
+    }
 }

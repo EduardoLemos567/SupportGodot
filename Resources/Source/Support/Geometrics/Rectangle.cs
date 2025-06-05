@@ -83,6 +83,12 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     {
         return (point - min).CastTo<float>() / Size.CastTo<float>();
     }
+    public readonly Vec2<N> PositiveModulo(in Vec2<N> point)
+    {
+        return new(
+            Toolbox.PositiveModulo(point.x, Size.x),
+            Toolbox.PositiveModulo(point.y, Size.y));
+    }
     #region CONVERTERS
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly Rectangle<TOutput> ConvertTo<TOutput>() where TOutput : INumber<TOutput> => Rectangle<TOutput>.CreateFrom(min, Size);
