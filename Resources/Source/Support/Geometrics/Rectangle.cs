@@ -91,7 +91,7 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     }
     #region CONVERTERS
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public readonly Rectangle<TOutput> ConvertTo<TOutput>() where TOutput : INumber<TOutput> => Rectangle<TOutput>.CreateFrom(min, Size);
+    public readonly Rectangle<TOutput> CastTo<TOutput>() where TOutput : INumber<TOutput> => Rectangle<TOutput>.CreateFrom(min, Size);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rectangle<N> CreateFrom<TInput>(Vec2<TInput> min, Vec2<TInput> size)
         where TInput : INumber<TInput> => new(min.CastTo<N>(), size.CastTo<N>());
