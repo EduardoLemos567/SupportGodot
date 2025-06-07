@@ -47,10 +47,31 @@ public struct Box<N> : IConstraintable where N : INumber<N>
     }
     public readonly bool IsPointIn(in Vec3<N> point) => (point >= min).AllTrue && (point <= Max).AllTrue;
     public readonly bool IsBoxIn(in Box<N> other) => IsPointIn(other.min) && IsPointIn(other.Max);
-    //TODO: test this, prolly is wrong.
-    public readonly bool IsBoxContact(in Box<N> other) => IsPointIn(other.min) || IsPointIn(other.Max);
-    public readonly Vec3<N> Clamp(in Vec3<N> value) => value.Clamp(min, Max);
-    public readonly Vec3<N> Lerp(in Vec3<N> value) => (value - min) / (Max - min);
-    public readonly Vec3<N> InverseLerp(in Vec3<N> value) => value * (Max - min) + min;
-    //TODO: create methods for inflate for box or point
+    public readonly bool IsBoxContact(in Box<N> other) => (other.Max >= min).AllTrue && (other.min <= Max).AllTrue;
+    public readonly Vec3<N> Clamp(in Vec3<N> point) => point.Clamp(min, Max);
+    public readonly Vec3<N> Lerp(in Vec3<N> uv) => (uv - min) / (Max - min);
+    public readonly Vec3<N> InverseLerp(in Vec3<N> point) => point * (Max - min) + min;
+    public readonly Vec3<N> PositiveModulo(in Vec3<N> point)
+    {
+        return new(
+            Toolbox.PositiveModulo(point.x, Size.x),
+            Toolbox.PositiveModulo(point.y, Size.y),
+            Toolbox.PositiveModulo(point.z, Size.z));
+    }
+    /// <summary>
+    /// Resize the rectangle to encapsulate the given point.
+    /// </summary>
+    /// <param name="point"></param>
+    public void Encapsulates(in Vec3<N> point)
+    {
+        if (IsPointIn(point)) { return; }
+        var max = Max;
+        if (point.x < min.x) { min.x = point.x; }
+        else if (point.x > max.x) { max.x = point.x; }
+        if (point.y < min.y) { min.y = point.y; }
+        else if (point.y > max.y) { max.y = point.y; }
+        if (point.z < min.z) { min.z = point.z; }
+        else if (point.z > max.z) { max.y = point.z; }
+        Max = max;
+    }
 }

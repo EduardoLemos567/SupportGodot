@@ -56,13 +56,9 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
         Center = center;
     }
     public readonly bool IsPointIn(in Vec2<N> point) => (point >= min).AllTrue && (point <= Max).AllTrue;
-    public readonly Vec2<N> Clamp(in Vec2<N> point)
-    {
-        var max = Max;
-        return new(N.Clamp(point.x, min.x, max.x), N.Clamp(point.y, min.y, max.y));
-    }
+    public readonly Vec2<N> Clamp(in Vec2<N> point) => point.Clamp(min, Max);
     /// <summary>
-    /// Resize the rectangle to encapsulate the given point.
+    /// Resize the box to encapsulate the given point.
     /// </summary>
     /// <param name="point"></param>
     public void Encapsulates(in Vec2<N> point)
@@ -75,11 +71,11 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
         else if (point.y > max.y) { max.y = point.y; }
         Max = max;
     }
-    public readonly Vec2<N> LinearInterpolation(in Vec2<float> uv)
+    public readonly Vec2<N> Lerp(in Vec2<float> uv)
     {
         return min + (Size.CastTo<float>() * uv).CastTo<N>();
     }
-    public readonly Vec2<float> InverseLinearInterpolation(in Vec2<N> point)
+    public readonly Vec2<float> InverseLerp(in Vec2<N> point)
     {
         return (point - min).CastTo<float>() / Size.CastTo<float>();
     }

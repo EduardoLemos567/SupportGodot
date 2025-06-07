@@ -23,7 +23,7 @@ public class Grid<F> where F : IFloatingPoint<F>
         usedOffset = new Vec2<F>(HexagonHalfWidth, HexagonQuarterHeight * F.CreateTruncating(2));
         var s = new Vec2<F>(
             F.CreateChecked(2 * Count.x) * HexagonHalfWidth + (Count.y > 1 ? HexagonHalfWidth : F.Zero),
-            F.CreateChecked(3 * Count.y) * HexagonQuarterHeight + HexagonQuarterHeight);    //TODO: test
+            F.CreateChecked(3 * Count.y) * HexagonQuarterHeight + HexagonQuarterHeight);
         Bounds = new() { Size = s };
         {
             var po = new Vec2<F>[6];
