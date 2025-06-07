@@ -12,7 +12,7 @@ public class SurfaceArray
         public Vector3 Vertex { get; init; }
         public Vector3 Normal { get; init; }
         public GodotColor Color { get; init; }
-        public Vector2 Uv { get; init; }
+        public Vector2 UV { get; init; }
     }
     private readonly List<VertexData> data;
     private readonly List<int> indices;
@@ -68,6 +68,16 @@ public class SurfaceArray
             RecalculateNormalFromTriangle(i);
         }
     }
+    public void RecalculateUVAsPlane(in Rect2 uvRect)
+    {
+        for (int i = 0; i < data.Count; i++)
+        {
+            var vertexData = data[i];
+            var xz = new Vector2(vertexData.Vertex.X, vertexData.Vertex.Z);
+            var uv = (xz - uvRect.Position) / uvRect.Size;
+            data[i] = vertexData with { UV = uv };
+        }
+    }
     public GodotArray ToArray()
     {
         var surfaceArray = new GodotArray();
@@ -81,7 +91,7 @@ public class SurfaceArray
             vertices[i] = d.Vertex;
             normals[i] = d.Normal;
             colors[i] = d.Color;
-            uvs[i] = d.Uv;
+            uvs[i] = d.UV;
         }
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
         surfaceArray[(int)Mesh.ArrayType.Vertex] = vertices;
@@ -91,10 +101,10 @@ public class SurfaceArray
         surfaceArray[(int)Mesh.ArrayType.Index] = indices.ToArray();
         return surfaceArray;
     }
-    public ArrayMesh AddSurfaceToArrayMesh(ArrayMesh? arrayMesh = null)
+    public ArrayMesh AddSurfaceToArrayMesh(ArrayMesh? arrayMesh = null, bool wireframe = false)
     {
         arrayMesh ??= new();
-        arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, ToArray());
+        arrayMesh.AddSurfaceFromArrays(wireframe ? Mesh.PrimitiveType.LineStrip : Mesh.PrimitiveType.Triangles, ToArray());
         return arrayMesh;
     }
 }

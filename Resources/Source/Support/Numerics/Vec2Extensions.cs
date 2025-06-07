@@ -62,11 +62,16 @@ public static class Vec2Extensions
             t.LerpBetween(self.y, target.y));
     }
     #endregion FLOAT_POINT_ONLY
+    /// <summary>
+    /// Loop through X first than next Y.
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns></returns>
     public static IEnumerable<Vec2<int>> EnumeratePositions(this Vec2<int> vec)
     {
-        for (int x = 0; x < vec.x; x++)
+        for (int y = 0; y < vec.y; y++)
         {
-            for (int y = 0; y < vec.y; y++)
+            for (int x = 0; x < vec.x; x++)
             {
                 yield return new(x, y);
             }

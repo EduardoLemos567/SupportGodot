@@ -63,4 +63,6 @@ public static class ListExtensions
     {
         return new(array.GetLength(0), array.GetLength(1));
     }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T IndexVec2<T>(this T[,] array, in Vec2<int> index) => array[index.x, index.y];
 }

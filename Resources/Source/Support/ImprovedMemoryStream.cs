@@ -49,7 +49,7 @@ namespace Support
         {
             if (destinationOffset + count > destinationBuffer.Length)
             {
-                throw new Exception("'destinationBuffer' has not enough space");
+                throw new ArgumentException("'destinationBuffer' has not enough space.");
             }
             if (count > 0)
             {
@@ -96,7 +96,7 @@ namespace Support
         {
             if (originOffset + count > originBuffer.Length)
             {
-                throw new Exception("Buffer has not enough space");
+                throw new ArgumentException("'originalBuffer' has not enough space.");
             }
             if (position + count > Capacity)
             {
@@ -126,11 +126,11 @@ namespace Support
         {
             if (maxCapacity.HasValue && value > maxCapacity.Value)
             {
-                throw new Exception("Resize requested exceeds maximum capacity previously set.");
+                throw new ArgumentException("Resize requested exceeds maximum capacity previously set.");
             }
             if (value < used)
             {
-                throw new Exception("Cant resize bellow Length, may lose data in use, use SetLength instead.");
+                throw new ArgumentException("Cant resize bellow Length, may lose data in use, use SetLength instead.");
             }
             var newBuffer = new byte[value];
             Array.Copy(buffer, newBuffer, used);
