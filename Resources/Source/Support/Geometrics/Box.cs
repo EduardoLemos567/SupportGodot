@@ -74,4 +74,5 @@ public struct Box<N> : IConstraintable where N : INumber<N>
         else if (point.z > max.z) { max.y = point.z; }
         Max = max;
     }
+    public override readonly string ToString() => $"(min: {min}, Size: {Size})";
 }

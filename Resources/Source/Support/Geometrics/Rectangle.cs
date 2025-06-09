@@ -92,4 +92,5 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     public static Rectangle<N> CreateFrom<TInput>(Vec2<TInput> min, Vec2<TInput> size)
         where TInput : INumber<TInput> => new(min.CastTo<N>(), size.CastTo<N>());
     #endregion CONVERTERS
+    public override readonly string ToString() => $"(min: {min}, Size: {Size})";
 }

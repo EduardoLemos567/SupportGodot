@@ -87,7 +87,7 @@ public struct Vec2<N> : IVectorNumber<N> where N : INumber<N>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly bool Equals(in Vec2<N> target) => (this == target).AllTrue;
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override readonly string ToString() => $"Vec2<{typeof(N).Name}>({x}, {y})";
+    public override readonly string ToString() => $"({x}, {y})";
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override readonly int GetHashCode() => HashCode.Combine(x, y);
     #endregion FUNCTIONS

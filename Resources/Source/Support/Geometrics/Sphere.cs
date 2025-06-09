@@ -25,4 +25,5 @@ public struct Sphere<N> : IConstraintable where N : INumber<N>
     {
         if (_radius < N.Zero) { _radius = N.Zero; }
     }
+    public override readonly string ToString() => $"(center: {center}, Radius: {Radius})";
 }

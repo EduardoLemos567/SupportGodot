@@ -26,4 +26,5 @@ public struct Bool2 : IVectorBool
         this.x = x;
         this.y = y;
     }
+    public override readonly string ToString() => $"({x}, {y})";
 }

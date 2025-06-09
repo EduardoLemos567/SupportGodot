@@ -30,4 +30,5 @@ public struct Circle<N> : IConstraintable where N : INumber<N>
         return center + (radianAngle.Delta * float.CreateChecked(Radius)).CastTo<N>();
     }
     public readonly bool IsPointIn(in Vec2<N> point) => center.SqrDistance(point) <= (Radius * Radius);
+    public override readonly string ToString() => $"(center: {center}, Radius: {Radius})";
 }

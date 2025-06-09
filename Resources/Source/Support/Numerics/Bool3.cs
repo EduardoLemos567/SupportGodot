@@ -30,4 +30,5 @@ public struct Bool3 : IVectorBool
         this.y = y;
         this.z = z;
     }
+    public override readonly string ToString() => $"({x}, {y}, {z})";
 }
