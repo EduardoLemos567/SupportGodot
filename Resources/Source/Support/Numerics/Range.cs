@@ -2,29 +2,27 @@
 
 namespace Support.Numerics;
 
-public struct Range<T> : IConstraintable where T : INumber<T>
+public readonly struct Range<N> where N : INumber<N>
 {
-    private T min;
-    private T max;
-    public T Min
+    public N Min { get; }
+    public N Max { get; }
+    public readonly N Mid => Delta / N.CreateTruncating(2);
+    public readonly N Delta => Max - Min;
+    public Range(N min, N max)
     {
-        readonly get => min;
-        set { min = value; EnforceConstraint(); }
+        if (min > max)
+        {
+            (min, max) = (max, min);
+        }
+        Min = min;
+        Max = max;
     }
-    public T Max
+    public readonly N PositiveModulo(in N value) => Toolbox.PositiveModulo(value, Delta) + Min;
+    public readonly N Clamp(in N value) => N.Clamp(value, Min, Max);
+    public readonly int CompareTo(in N value)
     {
-        readonly get => max;
-        set { max = value; EnforceConstraint(); }
+        if (value < Min) { return -1; }
+        if (value > Max) { return 1; }
+        return 0;
     }
-    public readonly T Mid => Delta / T.CreateTruncating(2);
-    public readonly T Delta => max - min;
-    public Range(in T min, in T max)
-    {
-        this.min = min;
-        this.max = max;
-        EnforceConstraint();
-    }
-    public void EnforceConstraint() { if (min > max) { (min, max) = (max, min); } }
-    public readonly T Modulo(in T value) => ((value - Min) % Delta) + Min;
-    public readonly T Clamp(in T value) => T.Clamp(value, min, max);
 }

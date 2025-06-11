@@ -69,13 +69,13 @@ public struct RadianAngle : IConstraintable
         _radian = radian;
         EnforceConstraint();
     }
-    public void EnforceConstraint() => _radian = RADIAN_RANGE.Modulo(_radian);
+    public void EnforceConstraint() => _radian = RADIAN_RANGE.PositiveModulo(_radian);
     public static RadianAngle RandomAngle(in ARng rng) => new(rng.GetPointIn(RADIAN_RANGE));
     public static RadianAngle operator +(in RadianAngle range, float value) => new(range.Radian + value);
     public static RadianAngle operator -(in RadianAngle range, float value) => new(range.Radian - value);
     public static RadianAngle operator *(in RadianAngle range, float value) => new(range.Radian * value);
     public static RadianAngle operator /(in RadianAngle range, float value) => new(range.Radian / value);
     public static implicit operator float(in RadianAngle angle) => angle.Radian;
-    private static float ToDegree(float radian) => RADIAN_RANGE.Modulo(radian) * RAD_TO_DEGREE;
-    private static float FromDegree(float degree) => DEGREE_RANGE.Modulo(degree) * DEGREE_TO_RAD;
+    private static float ToDegree(float radian) => RADIAN_RANGE.PositiveModulo(radian) * RAD_TO_DEGREE;
+    private static float FromDegree(float degree) => DEGREE_RANGE.PositiveModulo(degree) * DEGREE_TO_RAD;
 }
