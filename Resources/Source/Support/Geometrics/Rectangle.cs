@@ -89,13 +89,14 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     {
         var result = Vec2<int>.Zero;
 
-        if (point.x < N.Zero) { result.x = -1; }
-        else if (point.x >= Max.x) { result.x = 1; }
-        if (point.y < N.Zero) { result.y = -1; }
-        else if (point.y >= Max.y) { result.y = 1; }
+        if (point.x < min.x) { result.x = -1; }
+        else if (point.x > Max.x) { result.x = 1; }
+        if (point.y < min.y) { result.y = -1; }
+        else if (point.y > Max.y) { result.y = 1; }
 
         return result;
     }
+    public readonly Direction PointDirection(in Vec2<N> point) => Direction.FromDelta(CompareTo(point));
     #region CONVERTERS
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly Rectangle<TOutput> CastTo<TOutput>() where TOutput : INumber<TOutput> => Rectangle<TOutput>.CreateFrom(min, Size);

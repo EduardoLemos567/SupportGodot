@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Support.Diagnostics;
 using Support.Numerics;
 
@@ -22,7 +23,7 @@ public readonly struct Direction : IEquatable<Direction>
     private const byte MIN = 1;
     public const byte SIZE = 8;
     private const byte HALF_SIZE = SIZE / 2;
-    private static readonly float HALF_CIRCLE = (float)Math.Sin(Math.PI * 45 / 180);
+    private static readonly float HALF_CIRCLE = float.Sin(float.Pi * 45 / 180);
     public static readonly Direction None = new(DIRECTIONS.NONE);
     public static readonly Direction Up = new(DIRECTIONS.UP);
     public static readonly Direction UpRight = new(DIRECTIONS.UP_RIGHT);
@@ -60,7 +61,7 @@ public readonly struct Direction : IEquatable<Direction>
         DIRECTIONS.DOWN_LEFT => DownRight,
         DIRECTIONS.LEFT => Right,
         DIRECTIONS.UP_LEFT => UpRight,
-        _ => default,
+        _ => None,
     };
     public readonly Direction OppositeVertical => AsEnum switch
     {
@@ -72,7 +73,7 @@ public readonly struct Direction : IEquatable<Direction>
         DIRECTIONS.DOWN_LEFT => UpLeft,
         DIRECTIONS.LEFT => Left,
         DIRECTIONS.UP_LEFT => DownLeft,
-        _ => default,
+        _ => None,
     };
     public Direction(DIRECTIONS asEnum) => AsEnum = asEnum;
     public static Direction operator +(in Direction direction, int value)
@@ -89,15 +90,15 @@ public readonly struct Direction : IEquatable<Direction>
     {
         return AsEnum switch
         {
-            DIRECTIONS.UP => new(0, 1),
-            DIRECTIONS.UP_RIGHT => new(1, 1),
+            DIRECTIONS.UP => new(0, -1),
+            DIRECTIONS.UP_RIGHT => new(1, -1),
             DIRECTIONS.RIGHT => new(1, 0),
-            DIRECTIONS.DOWN_RIGHT => new(1, -1),
-            DIRECTIONS.DOWN => new(0, -1),
-            DIRECTIONS.DOWN_LEFT => new(-1, -1),
+            DIRECTIONS.DOWN_RIGHT => new(1, 1),
+            DIRECTIONS.DOWN => new(0, 1),
+            DIRECTIONS.DOWN_LEFT => new(-1, 1),
             DIRECTIONS.LEFT => new(-1, 0),
-            DIRECTIONS.UP_LEFT => new(-1, 1),
-            _ => default
+            DIRECTIONS.UP_LEFT => new(-1, -1),
+            _ => Vec2<int>.Zero,
         };
     }
     public readonly Vec2<float> ToFloat() => ToInt().CastTo<float>() * (IsDiagonal ? HALF_CIRCLE : 1);
@@ -162,57 +163,49 @@ public readonly struct Direction : IEquatable<Direction>
     public static bool operator ==(in Direction one, in Direction other) => one.AsEnum == other.AsEnum;
     public static bool operator !=(in Direction one, in Direction other) => one.AsEnum != other.AsEnum;
     public static Vec2<int> operator +(in Vec2<int> left, in Direction right) => left + right.ToInt();
-    public static Direction FromInt(in Vec2<int> delta)
+    public static Direction FromDelta<N>(in Vec2<N> delta) where N : INumber<N>
     {
-        switch (delta.x, delta.y)
+        return (delta.x, delta.y) switch
         {
-            case (0, 0): return None;
-            case ( > 0, 0): return Right;
-            case ( < 0, 0): return Left;
-            case (0, > 0): return Up;
-            case (0, < 0): return Down;
-            case ( > 0, > 0): return UpRight;
-            case ( < 0, < 0): return DownLeft;
-            case ( > 0, < 0): return DownRight;
-            case ( < 0, > 0): return UpLeft;
-        }
+            ( > 0, 0) => Right,
+            ( < 0, 0) => Left,
+            (0, < 0) => Up,
+            (0, > 0) => Down,
+            ( > 0, < 0) => UpRight,
+            ( < 0, > 0) => DownLeft,
+            ( > 0, > 0) => DownRight,
+            ( < 0, < 0) => UpLeft,
+            _ => None,
+        };
     }
-    public static IEnumerable<Direction> LoopClockwise(Direction from = default, Direction to = default)
+    public static IEnumerable<Direction> LoopClockwise(Direction from = default, Direction to = default, int stride = 1)
     {
         if (from == default) { from = Up; }
         if (to == default) { to = from; }
         do
         {
             yield return from;
-            from += 1;
+            from += stride;
         } while (from != to);
         yield return to;
     }
-    public static IEnumerable<Direction> LoopCounterClockwise(Direction from = default, Direction to = default)
+    public static IEnumerable<Direction> LoopCounterClockwise(Direction from = default, Direction to = default, int stride = 1)
     {
         if (from == default) { from = Up; }
         if (to == default) { to = from; }
         do
         {
             yield return from;
-            from -= 1;
+            from -= stride;
         } while (from != to);
         yield return to;
     }
-    public static IEnumerable<Direction> CardinalClockwise()
+    public static IEnumerable<Direction> LoopClockwiseCardinalOnly()
     {
-        for (var d = Up; ; d += 2)
-        {
-            yield return d;
-            if (d.AsEnum == Left.AsEnum) { break; }
-        }
+        return LoopClockwise(Up, Left, 2);
     }
-    public static IEnumerable<Direction> DiagonalClockwise()
+    public static IEnumerable<Direction> LoopClockwiseDiagonalOnly()
     {
-        for (var d = UpRight; ; d += 2)
-        {
-            yield return d;
-            if (d.AsEnum == UpLeft.AsEnum) { break; }
-        }
+        return LoopClockwise(UpRight, UpLeft, 2);
     }
 }

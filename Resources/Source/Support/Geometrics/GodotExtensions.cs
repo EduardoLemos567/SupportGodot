@@ -13,7 +13,7 @@ public static class GodotExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rectangle<N> ToRectangle<N>(in this GodotRect2 from) where N : INumber<N> => Rectangle<N>.CreateFrom(from.Position.ToVec2(), from.Size.ToVec2());
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Rectangle<float> ToRectangle(in this GodotRect2 from) => ToRectangle(from);
+    public static Rectangle<float> ToRectangle(in this GodotRect2 from) => ToRectangle<float>(from);
     /// <summary>
     /// min is top left (min -> Position), max is bottom right (Max -> End).
     /// </summary>
