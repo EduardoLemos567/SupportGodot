@@ -82,25 +82,25 @@ public struct VoronoiCell
         Array.Copy(border, 0, temp, 0, border.Length);
         var last = border.Length - 1;
         //var calculatedOffset = borderBounds.Clamp(direction.ToVec2<double>() * double.PositiveInfinity);
-        var infinite = direction.ToFloat().CastTo<double>() * double.PositiveInfinity;
+        var infinite = direction.ToVec2Float().CastTo<double>() * double.PositiveInfinity;
         // Apply calculated offset
         if (direction.IsDiagonal)
         {
-            switch (direction.AsEnum)
+            switch (direction.asEnum)
             {
-                case Direction.DIRECTIONS.UP_RIGHT:
+                case Direction.ENUM.UP_RIGHT:
                     temp[last + 1].point = borderBounds.Clamp(border[last].point + new Vec2<double>(infinite.x, 0));   // right
                     temp[last + 3].point = borderBounds.Clamp(border[0].point + new Vec2<double>(0, infinite.y)); // up
                     break;
-                case Direction.DIRECTIONS.DOWN_RIGHT:
+                case Direction.ENUM.DOWN_RIGHT:
                     temp[last + 1].point = borderBounds.Clamp(border[last].point + new Vec2<double>(0, infinite.y));   // down
                     temp[last + 3].point = borderBounds.Clamp(border[0].point + new Vec2<double>(infinite.x, 0)); // right
                     break;
-                case Direction.DIRECTIONS.DOWN_LEFT:
+                case Direction.ENUM.DOWN_LEFT:
                     temp[last + 1].point = borderBounds.Clamp(border[last].point + new Vec2<double>(infinite.x, 0));   // left
                     temp[last + 3].point = borderBounds.Clamp(border[0].point + new Vec2<double>(0, infinite.y)); // down
                     break;
-                case Direction.DIRECTIONS.UP_LEFT:
+                case Direction.ENUM.UP_LEFT:
                     temp[last + 1].point = borderBounds.Clamp(border[last].point + new Vec2<double>(0, infinite.y));   // up
                     temp[last + 3].point = borderBounds.Clamp(border[0].point + new Vec2<double>(infinite.x, 0)); // left
                     break;

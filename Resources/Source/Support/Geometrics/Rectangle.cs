@@ -92,8 +92,8 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
     }
     public void EnforceConstraint()
     {
-        _min = _min.Min(_max);
-        _max = _max.Max(_min);
+        if (_max.x < _min.x) { (_min.x, _max.x) = (_max.x, _min.x); }
+        if (_max.y < _min.y) { (_min.y, _max.y) = (_max.y, _min.y); }
     }
     public readonly bool IsPointIn(in Vec2<N> point) => (point >= _min).AllTrue && (point <= _max).AllTrue;
     public readonly Vec2<N> Clamp(in Vec2<N> point) => point.Clamp(_min, _max);

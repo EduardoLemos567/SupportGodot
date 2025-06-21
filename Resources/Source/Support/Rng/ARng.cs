@@ -83,7 +83,7 @@ public abstract partial class ARng
     public Vec3<N> GetVec3<N>(in Vec3<N> minValue, in Vec3<N> maxValue) where N : INumber<N> => new(GetNumber(minValue.x, maxValue.x), GetNumber(minValue.y, maxValue.y), GetNumber(minValue.z, maxValue.z));
     public Vec4<N> GetVec4<N>(N minValue, N maxValue) where N : INumber<N> => new(GetNumber(minValue, maxValue), GetNumber(minValue, maxValue), GetNumber(minValue, maxValue), GetNumber(minValue, maxValue));
     public Vec4<N> GetVec4<N>(in Vec4<N> minValue, in Vec4<N> maxValue) where N : INumber<N> => new(GetNumber(minValue.x, maxValue.x), GetNumber(minValue.y, maxValue.y), GetNumber(minValue.z, maxValue.z), GetNumber(minValue.w, maxValue.w));
-    public Direction GetDirection() => new(Pick<Direction.DIRECTIONS>(false));
+    public Direction GetDirection() => Direction.FromEnum(Pick<Direction.ENUM>(false));
     public void ShuffleList<T>(IList<T> list)
     {
         var n = list.Count;
