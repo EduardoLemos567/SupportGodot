@@ -35,7 +35,7 @@ public abstract partial class ARng
         return chance > F.Zero && (chance >= F.One || GetNumber(F.Zero, F.One) <= chance);
     }
     public N GetPointIn<N>(in Range<N> range) where N : INumber<N> => GetNumber(range.Min, range.Max);
-    public Vec2<N> GetPointIn<N>(in Rectangle<N> rect) where N : INumber<N> => GetVec2(rect.min, rect.Max);
+    public Vec2<N> GetPointIn<N>(in Rectangle<N> rect) where N : INumber<N> => GetVec2(rect.Min, rect.Max);
     public Vec2<N> GetPointIn<N>(in Circle<N> circle) where N : INumber<N>
     {
         var randomCircle = new Circle<N>() { center = circle.center, Radius = GetNumber(N.Zero, circle.Radius) };

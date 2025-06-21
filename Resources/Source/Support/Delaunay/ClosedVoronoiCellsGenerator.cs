@@ -77,39 +77,39 @@ namespace Support.Delaunay
             for (var x = 0; x < repeats.x; x++)
             {   // Horizontal
                 // Bottom
-                points.Add(new(bounds.min.x + x * stride.x, bounds.min.y - parameters.borderDistance));
+                points.Add(new(bounds.Min.x + x * stride.x, bounds.Min.y - parameters.borderDistance));
                 borderDirections.Add(points.Count - 1, Direction.Down);
                 // Top
-                points.Add(new(bounds.min.x + x * stride.x, bounds.Max.y + parameters.borderDistance));
+                points.Add(new(bounds.Min.x + x * stride.x, bounds.Max.y + parameters.borderDistance));
                 borderDirections.Add(points.Count - 1, Direction.Up);
             }
             for (var y = 0; y < repeats.y; y++)
             {   // Vertical
                 // Left
-                points.Add(new(bounds.min.x - parameters.borderDistance, bounds.min.y + y * stride.y));
+                points.Add(new(bounds.Min.x - parameters.borderDistance, bounds.Min.y + y * stride.y));
                 borderDirections.Add(points.Count - 1, Direction.Left);
                 // Right
-                points.Add(new(bounds.Max.x + parameters.borderDistance, bounds.min.y + y * stride.y));
+                points.Add(new(bounds.Max.x + parameters.borderDistance, bounds.Min.y + y * stride.y));
                 borderDirections.Add(points.Count - 1, Direction.Right);
             }
             // Bottom Left
-            points.Add(bounds.min - parameters.borderDistance);
+            points.Add(bounds.Min - parameters.borderDistance);
             borderDirections.Add(points.Count - 1, Direction.DownLeft);
             // Bottom Right
-            points.Add(new(bounds.Max.x + parameters.borderDistance, bounds.min.y - parameters.borderDistance));
+            points.Add(new(bounds.Max.x + parameters.borderDistance, bounds.Min.y - parameters.borderDistance));
             borderDirections.Add(points.Count - 1, Direction.DownRight);
             // Top Left
-            points.Add(new Vec2<double>(bounds.min.x - parameters.borderDistance, bounds.Max.y + parameters.borderDistance));
+            points.Add(new Vec2<double>(bounds.Min.x - parameters.borderDistance, bounds.Max.y + parameters.borderDistance));
             borderDirections.Add(points.Count - 1, Direction.UpLeft);
             // Top Right
             points.Add(bounds.Max + parameters.borderDistance);
             borderDirections.Add(points.Count - 1, Direction.UpRight);
-            bounds.GrowInPlace(new(parameters.borderDistance * 2));
+            bounds.Radius += new Vec2<double>(parameters.borderDistance);
             return borderDirections;
         }
-        private static IReadOnlyList<VoronoiCell> CollectVoronoiCells(in Parameters parameters, in Rectangle<double> bounds, in Triangulator triangulator, in Dictionary<int, Direction> borderDirections)
+        private static IReadOnlyList<VoronoiCell> CollectVoronoiCells(in Parameters parameters, Rectangle<double> bounds, in Triangulator triangulator, in Dictionary<int, Direction> borderDirections)
         {
-            bounds.GrowInPlace(new(parameters.borderDistance * 2));
+            bounds.Radius += new Vec2<double>(parameters.borderDistance);
             var cells = new VoronoiCell[triangulator.Points.Count];
             foreach (var cell in triangulator.GetVoronoiCellsBasedOnCentroids())
             {
@@ -121,10 +121,10 @@ namespace Support.Delaunay
             }
             return cells;
         }
-        private static Rectangle<double> AddExtraBorderIds(in Parameters parameters, in Rectangle<double> bounds, in IReadOnlyList<VoronoiCell> cells, in HashSet<int> borderIds)
+        private static Rectangle<double> AddExtraBorderIds(in Parameters parameters, Rectangle<double> bounds, in IReadOnlyList<VoronoiCell> cells, in HashSet<int> borderIds)
         {
             var validBounds = bounds;
-            validBounds.GrowInPlace(-bounds.Size * parameters.borderExtra);
+            bounds.Radius += (-bounds.Size / 2) * parameters.borderExtra;
             if (parameters.borderExtra > 0)
             {
                 foreach (var cell in cells)

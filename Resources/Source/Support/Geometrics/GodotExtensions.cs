@@ -20,12 +20,12 @@ public static class GodotExtensions
     /// <param name="from"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GodotRect2 ToGodotRect2(in this Rectangle<float> from) => new(from.min.ToGodotVector2(), from.Size.ToGodotVector2());
+    public static GodotRect2 ToGodotRect2(in this Rectangle<float> from) => new(from.Min.ToGodotVector2(), from.Size.ToGodotVector2());
     // GodotRect2I
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rectangle<N> ToRectangle<N>(in this GodotRect2I from) where N : INumber<N> => Rectangle<N>.CreateFrom(from.Position.ToVec2(), from.Size.ToVec2());
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rectangle<int> ToRectangle(in this GodotRect2I from) => ToRectangle<int>(from);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static GodotRect2I ToGodotRect2I(in this Rectangle<int> from) => new(from.min.ToGodotVector2I(), from.Size.ToGodotVector2I());
+    public static GodotRect2I ToGodotRect2I(in this Rectangle<int> from) => new(from.Min.ToGodotVector2I(), from.Size.ToGodotVector2I());
 }

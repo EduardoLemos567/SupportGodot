@@ -93,12 +93,12 @@ namespace Game
             var size = rect.Size;
             while (true)
             {
-                var randomPoint = rect.min + rng.GetVec2<double>(Vec2<double>.Zero, size);
+                var randomPoint = rect.Min + rng.GetVec2<double>(Vec2<double>.Zero, size);
                 if (rejectionSqrDistance.HasValue && center.SqrDistance(randomPoint) > rejectionSqrDistance.Value)
                 {
                     continue;
                 }
-                var index = Denormalize(randomPoint, rect.min, cellSize);
+                var index = Denormalize(randomPoint, rect.Min, cellSize);
                 grid[index.x, index.y] = randomPoint;
                 activePoints.Add(randomPoint);
                 points.Add(randomPoint);
@@ -108,11 +108,11 @@ namespace Game
         private bool AddNextPoint(in Vec2<double> point)
         {
             var randomPoint = GenerateRandomPointAround(point, minDistance);
-            if (randomPoint.x >= rect.min.x && randomPoint.x < rect.Max.x &&
-                randomPoint.y > rect.min.y && randomPoint.y < rect.Max.y &&
+            if (randomPoint.x >= rect.Min.x && randomPoint.x < rect.Max.x &&
+                randomPoint.y > rect.Min.y && randomPoint.y < rect.Max.y &&
                 (rejectionSqrDistance == null || center.SqrDistance(randomPoint) <= rejectionSqrDistance))
             {
-                var randomPointIndex = Denormalize(randomPoint, rect.min, cellSize);
+                var randomPointIndex = Denormalize(randomPoint, rect.Min, cellSize);
                 for (var x = Mathf.Max(0, randomPointIndex.x - 2); x < Mathf.Min(gridSize.x, randomPointIndex.x + 3); x++)
                 {
                     for (var y = Mathf.Max(0, randomPointIndex.y - 2); y < Mathf.Min(gridSize.y, randomPointIndex.y + 3); y++)
