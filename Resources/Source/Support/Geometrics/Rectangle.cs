@@ -131,6 +131,11 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
 
         return result;
     }
+    /// <summary>
+    /// Returns the direction based on Rectangle shape, of a point outside thats outside.
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     public readonly Direction PointOutsideDirection(in Vec2<N> point) => Direction.FromDelta(CompareTo(point));
     #region CONVERTERS
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
