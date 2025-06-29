@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgo2spv36wqxy"]
+
+[ext_resource type="Script" uid="uid://cvdk2bc8sdnig" path="res://Resources/Features/Widgets/Vector2Box.cs" id="1_b685i"]
+
+[node name="Vector2Box" type="HBoxContainer" node_paths=PackedStringArray("xSpinBox", "ySpinBox")]
+offset_right = 176.0
+offset_bottom = 31.0
+script = ExtResource("1_b685i")
+xSpinBox = NodePath("xSpinBox")
+ySpinBox = NodePath("ySpinBox")
+
+[node name="xSpinBox" type="SpinBox" parent="."]
+modulate = Color(1, 0.3, 0.3, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+prefix = "X:"
+
+[node name="ySpinBox" type="SpinBox" parent="."]
+modulate = Color(0.3, 1, 0.428333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+prefix = "Y:"
+
+[connection signal="value_changed" from="xSpinBox" to="." method="OnXValueChanged"]
+[connection signal="value_changed" from="ySpinBox" to="." method="OnYValueChanged"]

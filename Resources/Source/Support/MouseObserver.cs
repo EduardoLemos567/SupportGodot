@@ -4,13 +4,19 @@ namespace Support;
 
 public class MouseObserver
 {
-    public delegate void ClickedHandler(in Vector2 startPosition);
-    public delegate void MovedHandler(in Vector2 position);
-    public delegate void DragStartedHandler(in Vector2 startPosition);
-    public delegate void DragMovedHandler(in Vector2 position, in Vector2 deltaPosition);
-    public delegate void DragEndedHandler(in Vector2 endPosition);
-    public Vector2? FirstClickPosition { get; private set; }
-    public Vector2? LastDraggedPosition { get; private set; }
+    public readonly ref struct Stats
+    {
+        public Vector2 InitialPosition { get; init; }
+        public Vector2 CurrentPosition { get; init; }
+        public Vector2 RelativeLast { get; init; }
+        public Vector2 RelativeInitial => CurrentPosition - InitialPosition;
+    }
+    public delegate void ClickedHandler(in Stats stats);
+    public delegate void MovedHandler(in Stats stats);
+    public delegate void DragStartedHandler(in Stats stats);
+    public delegate void DragMovedHandler(in Stats stats);
+    public delegate void DragEndedHandler(in Stats stats);
+    public Vector2? ClickPosition { get; private set; }
     public bool IsDragging { get; private set; }
     /// <summary>
     /// Mask of mouse buttons that this observer is interested in. If zero, it will process all inputs.
@@ -33,44 +39,66 @@ public class MouseObserver
                 break;
         }
     }
-    private void ProcessButton(InputEventMouseButton @event)
+    private void ProcessButton(InputEventMouseButton buttonEvent)
     {
-        if (TargetMask != 0 && @event.ButtonMask != TargetMask)
+        if (buttonEvent.IsPressed())
         {
-            return; // Ignore events not matching the target mask
+            if (TargetMask != 0 && buttonEvent.ButtonMask != TargetMask)
+            {
+                return; // Ignore press events not matching the target mask.
+            }
+            ClickPosition = buttonEvent.GlobalPosition;
+            Clicked?.Invoke(new()
+            {
+                InitialPosition = ClickPosition.Value,
+                CurrentPosition = ClickPosition.Value,
+            });
         }
-        if (@event.IsPressed())
+        else if (buttonEvent.IsReleased())
         {
-            FirstClickPosition = @event.GlobalPosition;
-            Clicked?.Invoke(FirstClickPosition.Value);
-        }
-        else if (IsDragging && @event.IsReleased())
-        {
-            ForceRelease();
+            if (IsDragging)
+            {
+                IsDragging = false;
+                DragEnded?.Invoke(new Stats()
+                {
+                    InitialPosition = ClickPosition!.Value,
+                    CurrentPosition = buttonEvent.GlobalPosition,
+                });
+            }
+            ClickPosition = null;
         }
     }
-    private void ProcessMotion(InputEventMouseMotion @event)
+    private void ProcessMotion(InputEventMouseMotion motionEvent)
     {
         if (IsDragging)
         {
-            LastDraggedPosition = @event.GlobalPosition;
-            DragMoved?.Invoke(LastDraggedPosition.Value, LastDraggedPosition.Value - FirstClickPosition!.Value);
+            DragMoved?.Invoke(new Stats()
+            {
+                InitialPosition = ClickPosition!.Value,
+                CurrentPosition = motionEvent.GlobalPosition,
+                RelativeLast = motionEvent.Relative,
+            });
         }
-        else if (FirstClickPosition.HasValue)
+        else if (ClickPosition.HasValue)
         {
             IsDragging = true;
-            DragStarted?.Invoke(FirstClickPosition.Value);
+            DragStarted?.Invoke(new()
+            {
+                InitialPosition = ClickPosition.Value,
+                CurrentPosition = motionEvent.GlobalPosition,
+                RelativeLast = motionEvent.Relative,
+            });
         }
-        Moved?.Invoke(@event.GlobalPosition);
+        Moved?.Invoke(new Stats()
+        {
+            InitialPosition = motionEvent.GlobalPosition - motionEvent.Relative,
+            CurrentPosition = motionEvent.GlobalPosition,
+            RelativeLast = motionEvent.Relative,
+        });
     }
     public void ForceRelease()
     {
-        FirstClickPosition = null;
-        if (IsDragging)
-        {
-            IsDragging = false;
-            DragEnded?.Invoke(LastDraggedPosition!.Value);
-            LastDraggedPosition = null;
-        }
+        IsDragging = false;
+        ClickPosition = null;
     }
 }

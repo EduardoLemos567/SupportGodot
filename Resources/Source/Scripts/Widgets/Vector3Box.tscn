@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyf5v8vfuaq6i"]
+
+[ext_resource type="Script" uid="uid://csudv8q11yiql" path="res://Resources/Features/Widgets/Vector3Box.cs" id="1_wjfdd"]
+
+[node name="Vector3Box" type="HBoxContainer" node_paths=PackedStringArray("xSpinBox", "ySpinBox", "zSpinBox")]
+offset_right = 176.0
+offset_bottom = 31.0
+script = ExtResource("1_wjfdd")
+xSpinBox = NodePath("xSpinBox")
+ySpinBox = NodePath("ySpinBox")
+zSpinBox = NodePath("zSpinBox")
+
+[node name="xSpinBox" type="SpinBox" parent="."]
+modulate = Color(1, 0.3, 0.3, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+prefix = "X:"
+
+[node name="ySpinBox" type="SpinBox" parent="."]
+modulate = Color(0.3, 1, 0.428333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+prefix = "Y:"
+
+[node name="zSpinBox" type="SpinBox" parent="."]
+modulate = Color(0.3, 0.895, 1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+prefix = "Z:"
+
+[connection signal="value_changed" from="xSpinBox" to="." method="OnXValueChanged"]
+[connection signal="value_changed" from="ySpinBox" to="." method="OnYValueChanged"]
+[connection signal="value_changed" from="zSpinBox" to="." method="OnZValueChanged"]

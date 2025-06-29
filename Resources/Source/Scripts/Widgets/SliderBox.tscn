@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://6xnbwgg5qx7u"]
+
+[ext_resource type="Script" uid="uid://d02l11d0h17rw" path="res://Resources/Features/Widgets/SliderBox.cs" id="1_1ro78"]
+
+[node name="SliderBox" type="HBoxContainer" node_paths=PackedStringArray("slider", "spinBox")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1ro78")
+slider = NodePath("HSlider")
+spinBox = NodePath("SpinBox")
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+
+[connection signal="value_changed" from="HSlider" to="." method="OnSliderValueChanged"]
+[connection signal="value_changed" from="SpinBox" to="." method="OnSpinBoxValueChanged"]

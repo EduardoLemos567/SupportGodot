@@ -34,7 +34,7 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
         set { _max = value; EnforceConstraint(); }
     }
     /// <summary>
-    /// Position of the rectangle, changes translate the rectangle as whole.
+    /// Position (min) of the rectangle, changes translate the rectangle as whole.
     /// </summary>
     public Vec2<N> Position
     {
@@ -57,6 +57,19 @@ public struct Rectangle<N> : IConstraintable where N : INumber<N>
             var offset = Size / TWO;
             _min = value - offset;
             _max = value + offset;
+        }
+    }
+    /// <summary>
+    /// End (max) of the rectangle, changes translate the rectangle as whole.
+    /// </summary>
+    public Vec2<N> End
+    {
+        readonly get => _max;
+        set
+        {
+            var size = Size;
+            _min = value - size;
+            _max = value;
         }
     }
     /// <summary>
