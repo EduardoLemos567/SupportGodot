@@ -2,7 +2,7 @@
 
 namespace Support;
 
-public class MouseObserver
+public class MouseEventsObserver
 {
     public readonly ref struct Stats
     {
